@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Theme Palette Options - Math KB</title>
+  <style>
+    :root {
+      --text: #212121;
+      --text-muted: #616161;
+      --text-light: #9e9e9e;
+      --bg: #fafafa;
+      --surface: #ffffff;
+      --border: #e0e0e0;
+      --radius: 6px;
+      --radius-sm: 4px;
+      --radius-round: 9999px;
+
+      --shadow-1: 0 1px 2px rgba(0,0,0,0.06);
+
+      --size-1: 0.25rem;
+      --size-2: 0.5rem;
+      --size-3: 0.75rem;
+      --size-4: 1rem;
+      --size-5: 1.25rem;
+      --size-6: 1.5rem;
+
+      --font-size-0: 0.75rem;
+      --font-size-1: 0.875rem;
+      --font-size-2: 1rem;
+      --font-size-3: 1.25rem;
+      --font-size-4: 1.5rem;
+
+      --font-weight-5: 500;
+      --font-weight-6: 600;
+      --font-weight-7: 700;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #f0f0f0;
+      color: var(--text);
+      margin: 0;
+      padding: var(--size-6);
+      line-height: 1.5;
+    }
+
+    .page-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto var(--size-8);
+    }
+
+    .page-title {
+      font-size: var(--font-size-4);
+      font-weight: var(--font-weight-7);
+      margin: 0;
+    }
+
+    .gallery {
+      display: grid;
+      gap: var(--size-8);
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .option {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow-1);
+    }
+
+    .option-header {
+      padding: var(--size-4) var(--size-5);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .option-id {
+      display: inline-block;
+      font-size: var(--font-size-0);
+      font-weight: var(--font-weight-6);
+      background: var(--accent-light);
+      color: var(--brand);
+      border-radius: var(--radius-sm);
+      padding: var(--size-1) var(--size-2);
+      margin-bottom: var(--size-2);
+    }
+
+    .option-name {
+      font-size: var(--font-size-3);
+      font-weight: var(--font-weight-7);
+      margin: 0 0 var(--size-1);
+    }
+
+    .option-desc {
+      font-size: var(--font-size-1);
+      color: var(--text-muted);
+      margin: 0;
+    }
+
+    .option-frame {
+      padding: var(--size-6);
+    }
+
+    /* Palette-specific overrides */
+    .palette-charcoal {
+      --brand: #212121;
+      --brand-light: #e0e0e0;
+      --brand-dark: #000000;
+      --accent: #555555;
+      --accent-light: #f5f5f5;
+      --header-bg: #1a1a1a;
+      --header-bg-dark: #000000;
+      --header-text: #ffffff;
+      --header-text-muted: rgba(255, 255, 255, 0.7);
+      --header-hover: rgba(255, 255, 255, 0.1);
+    }
+
+    .palette-slate-blue {
+      --brand: #334155;
+      --brand-light: #cbd5e1;
+      --brand-dark: #0f172a;
+      --accent: #475569;
+      --accent-light: #f1f5f9;
+      --header-bg: #0f172a;
+      --header-bg-dark: #020617;
+      --header-text: #ffffff;
+      --header-text-muted: rgba(255, 255, 255, 0.7);
+      --header-hover: rgba(255, 255, 255, 0.1);
+    }
+
+    .palette-deep-navy {
+      --brand: #1e3a5f;
+      --brand-light: #bfdbfe;
+      --brand-dark: #0a192f;
+      --accent: #2c5282;
+      --accent-light: #eff6ff;
+      --header-bg: #0a192f;
+      --header-bg-dark: #020617;
+      --header-text: #ffffff;
+      --header-text-muted: rgba(255, 255, 255, 0.7);
+      --header-hover: rgba(255, 255, 255, 0.1);
+    }
+
+    .palette-teal {
+      --brand: #0d7377;
+      --brand-light: #ccfbf1;
+      --brand-dark: #032f30;
+      --accent: #14b8a6;
+      --accent-light: #f0fdfa;
+      --header-bg: #032f30;
+      --header-bg-dark: #011c1d;
+      --header-text: #ffffff;
+      --header-text-muted: rgba(255, 255, 255, 0.7);
+      --header-hover: rgba(255, 255, 255, 0.1);
+    }
+
+    .palette-olive {
+      --brand: #556b2f;
+      --brand-light: #d9e5c3;
+      --brand-dark: #2f3a1e;
+      --accent: #7c8c4a;
+      --accent-light: #f4f7ed;
+      --header-bg: #2f3a1e;
+      --header-bg-dark: #1a2111;
+      --header-text: #ffffff;
+      --header-text-muted: rgba(255, 255, 255, 0.7);
+      --header-hover: rgba(255, 255, 255, 0.1);
+    }
+
+    .palette-plum {
+      --brand: #6b4c6e;
+      --brand-light: #e9d5e9;
+      --brand-dark: #2d1f2f;
+      --accent: #9b7ca0;
+      --accent-light: #f8f2f8;
+      --header-bg: #2d1f2f;
+      --header-bg-dark: #18111a;
+      --header-text: #ffffff;
+      --header-text-muted: rgba(255, 255, 255, 0.7);
+      --header-hover: rgba(255, 255, 255, 0.1);
+    }
+
+    .demo {
+      background: var(--bg);
+      color: var(--text);
+      padding: var(--size-6);
+      border-radius: var(--radius);
+    }
+
+    .demo-nav {
+      background: var(--header-bg);
+      border-bottom: 1px solid var(--header-bg-dark);
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin: calc(var(--size-6) * -1) calc(var(--size-6) * -1) var(--size-5);
+      padding-inline: var(--size-6);
+    }
+
+    .demo-logo { color: var(--header-text); font-weight: 700; }
+    .demo-logo-muted { font-weight: 300; color: var(--header-text-muted); }
+
+    .demo-theme-toggle {
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      background: var(--header-hover);
+      border: 1px solid var(--header-text-muted);
+      border-radius: var(--radius-sm);
+      padding: 2px;
+    }
+
+    .demo-theme-toggle span {
+      display: block;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      border: 1px solid var(--header-text-muted);
+    }
+
+    .demo-section-title {
+      font-size: var(--font-size-3);
+      font-weight: var(--font-weight-7);
+      margin-bottom: var(--size-3);
+    }
+
+    .demo-text {
+      color: var(--text-muted);
+      font-size: var(--font-size-1);
+      margin-bottom: var(--size-4);
+    }
+
+    .demo-button {
+      background: var(--brand);
+      color: white;
+      border: none;
+      border-radius: var(--radius-sm);
+      padding: var(--size-2) var(--size-4);
+      font-weight: var(--font-weight-6);
+      cursor: pointer;
+      margin-right: var(--size-2);
+    }
+
+    .demo-button-secondary {
+      background: var(--bg);
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+
+    .demo-tag {
+      display: inline-block;
+      font-size: var(--font-size-0);
+      font-weight: var(--font-weight-5);
+      color: var(--brand);
+      background: var(--accent-light);
+      border-radius: var(--radius-sm);
+      padding: var(--size-1) var(--size-2);
+      margin-right: var(--size-1);
+    }
+
+    .demo-link {
+      color: var(--brand);
+      text-decoration: none;
+      font-weight: var(--font-weight-5);
+    }
+
+    .demo-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .demo-list li {
+      border-bottom: 1px solid var(--border);
+      padding: var(--size-2) 0;
+      font-size: var(--font-size-1);
+    }
+  </style>
+</head>
+<body>
+  <header class="page-header">
+    <h1 class="page-title">Theme Palette Options</h1>
+  </header>
+
+  <div class="gallery">
+    <!-- A-1 -->
+    <section class="option">
+      <div class="option-header">
+        <span class="option-id">A-1</span>
+        <h2 class="option-name">Charcoal</h2>
+        <p class="option-desc">白黒を基調とした現在のデフォルト。</p>
+      </div>
+      <div class="option-frame palette-charcoal">
+        <div class="demo">
+          <div class="demo-nav">
+            <span class="demo-logo">Math<span class="demo-logo-muted">/kb</span></span>
+            <div class="demo-theme-toggle"><span></span><span></span><span></span></div>
+          </div>
+          <h3 class="demo-section-title">低差異数列</h3>
+          <p class="demo-text">Van der Corput, Halton, Sobol などの数列を可視化します。</p>
+          <button class="demo-button">Primary</button>
+          <button class="demo-button demo-button-secondary">Secondary</button>
+          <div style="margin-top: var(--size-4);">
+            <span class="demo-tag">低差異</span>
+            <span class="demo-tag">数論</span>
+          </div>
+          <ul class="demo-list" style="margin-top: var(--size-4);">
+            <li><a class="demo-link" href="#">Van der Corput Sequence</a></li>
+            <li><a class="demo-link" href="#">Halton Sequence</a></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- A-2 -->
+    <section class="option">
+      <div class="option-header">
+        <span class="option-id">A-2</span>
+        <h2 class="option-name">Slate Blue</h2>
+        <p class="option-desc">青みがかったグレー。落ち着いたプロフェッショナルな印象。</p>
+      </div>
+      <div class="option-frame palette-slate-blue">
+        <div class="demo">
+          <div class="demo-nav">
+            <span class="demo-logo">Math<span class="demo-logo-muted">/kb</span></span>
+            <div class="demo-theme-toggle"><span></span><span></span><span></span></div>
+          </div>
+          <h3 class="demo-section-title">低差異数列</h3>
+          <p class="demo-text">Van der Corput, Halton, Sobol などの数列を可視化します。</p>
+          <button class="demo-button">Primary</button>
+          <button class="demo-button demo-button-secondary">Secondary</button>
+          <div style="margin-top: var(--size-4);">
+            <span class="demo-tag">低差異</span>
+            <span class="demo-tag">数論</span>
+          </div>
+          <ul class="demo-list" style="margin-top: var(--size-4);">
+            <li><a class="demo-link" href="#">Van der Corput Sequence</a></li>
+            <li><a class="demo-link" href="#">Halton Sequence</a></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- A-3 -->
+    <section class="option">
+      <div class="option-header">
+        <span class="option-id">A-3</span>
+        <h2 class="option-name">Deep Navy</h2>
+        <p class="option-desc">濃い紺色。数学・科学系サイトによく合う。</p>
+      </div>
+      <div class="option-frame palette-deep-navy">
+        <div class="demo">
+          <div class="demo-nav">
+            <span class="demo-logo">Math<span class="demo-logo-muted">/kb</span></span>
+            <div class="demo-theme-toggle"><span></span><span></span><span></span></div>
+          </div>
+          <h3 class="demo-section-title">低差異数列</h3>
+          <p class="demo-text">Van der Corput, Halton, Sobol などの数列を可視化します。</p>
+          <button class="demo-button">Primary</button>
+          <button class="demo-button demo-button-secondary">Secondary</button>
+          <div style="margin-top: var(--size-4);">
+            <span class="demo-tag">低差異</span>
+            <span class="demo-tag">数論</span>
+          </div>
+          <ul class="demo-list" style="margin-top: var(--size-4);">
+            <li><a class="demo-link" href="#">Van der Corput Sequence</a></li>
+            <li><a class="demo-link" href="#">Halton Sequence</a></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- A-4 -->
+    <section class="option">
+      <div class="option-header">
+        <span class="option-id">A-4</span>
+        <h2 class="option-name">Teal</h2>
+        <p class="option-desc">青緑。落ち着いているが少し個性的。</p>
+      </div>
+      <div class="option-frame palette-teal">
+        <div class="demo">
+          <div class="demo-nav">
+            <span class="demo-logo">Math<span class="demo-logo-muted">/kb</span></span>
+            <div class="demo-theme-toggle"><span></span><span></span><span></span></div>
+          </div>
+          <h3 class="demo-section-title">低差異数列</h3>
+          <p class="demo-text">Van der Corput, Halton, Sobol などの数列を可視化します。</p>
+          <button class="demo-button">Primary</button>
+          <button class="demo-button demo-button-secondary">Secondary</button>
+          <div style="margin-top: var(--size-4);">
+            <span class="demo-tag">低差異</span>
+            <span class="demo-tag">数論</span>
+          </div>
+          <ul class="demo-list" style="margin-top: var(--size-4);">
+            <li><a class="demo-link" href="#">Van der Corput Sequence</a></li>
+            <li><a class="demo-link" href="#">Halton Sequence</a></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- A-5 -->
+    <section class="option">
+      <div class="option-header">
+        <span class="option-id">A-5</span>
+        <h2 class="option-name">Olive</h2>
+        <p class="option-desc">落ち着いたオリーブグリーン。</p>
+      </div>
+      <div class="option-frame palette-olive">
+        <div class="demo">
+          <div class="demo-nav">
+            <span class="demo-logo">Math<span class="demo-logo-muted">/kb</span></span>
+            <div class="demo-theme-toggle"><span></span><span></span><span></span></div>
+          </div>
+          <h3 class="demo-section-title">低差異数列</h3>
+          <p class="demo-text">Van der Corput, Halton, Sobol などの数列を可視化します。</p>
+          <button class="demo-button">Primary</button>
+          <button class="demo-button demo-button-secondary">Secondary</button>
+          <div style="margin-top: var(--size-4);">
+            <span class="demo-tag">低差異</span>
+            <span class="demo-tag">数論</span>
+          </div>
+          <ul class="demo-list" style="margin-top: var(--size-4);">
+            <li><a class="demo-link" href="#">Van der Corput Sequence</a></li>
+            <li><a class="demo-link" href="#">Halton Sequence</a></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- A-6 -->
+    <section class="option">
+      <div class="option-header">
+        <span class="option-id">A-6</span>
+        <h2 class="option-name">Plum</h2>
+        <p class="option-desc">渋い紫色。数学的な雰囲気を出しやすい。</p>
+      </div>
+      <div class="option-frame palette-plum">
+        <div class="demo">
+          <div class="demo-nav">
+            <span class="demo-logo">Math<span class="demo-logo-muted">/kb</span></span>
+            <div class="demo-theme-toggle"><span></span><span></span><span></span></div>
+          </div>
+          <h3 class="demo-section-title">低差異数列</h3>
+          <p class="demo-text">Van der Corput, Halton, Sobol などの数列を可視化します。</p>
+          <button class="demo-button">Primary</button>
+          <button class="demo-button demo-button-secondary">Secondary</button>
+          <div style="margin-top: var(--size-4);">
+            <span class="demo-tag">低差異</span>
+            <span class="demo-tag">数論</span>
+          </div>
+          <ul class="demo-list" style="margin-top: var(--size-4);">
+            <li><a class="demo-link" href="#">Van der Corput Sequence</a></li>
+            <li><a class="demo-link" href="#">Halton Sequence</a></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </div>
+</body>
+</html>

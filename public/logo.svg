@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 32" width="180" height="32" role="img" aria-label="anozon/mathkb">
+  <circle cx="16" cy="16" r="9" stroke="#60a5fa" stroke-width="1.5" fill="none"/>
+  <path d="M16 7v18M12 25l4-4 4 4" stroke="#60a5fa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="16" cy="10" r="1.5" fill="#60a5fa"/>
+  <text x="40" y="22" font-family="system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif" font-size="18" font-weight="700" fill="#ffffff">anozon</text>
+  <text x="96" y="22" font-family="system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif" font-size="18" font-weight="300" fill="rgba(255,255,255,0.7)">/mathkb</text>
+</svg>

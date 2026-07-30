@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Math Site CSS Framework Preview</title>
+  <style>
+    :root {
+      --font: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --bg: #fafafa;
+      --text: #1a1a1a;
+      --muted: #666;
+      --card: #fff;
+      --border: #e0e0e0;
+      --accent: #2563eb;
+    }
+    * { box-sizing: border-box; }
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text);
+      margin: 0;
+      padding: 2rem 1rem;
+      line-height: 1.6;
+    }
+    .container { max-width: 900px; margin: 0 auto; }
+    h1 { font-size: 1.8rem; margin-bottom: 0.5rem; }
+    p.lead { color: var(--muted); margin-bottom: 2rem; }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+    }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.25rem;
+      text-decoration: none;
+      color: inherit;
+      transition: box-shadow 0.15s, transform 0.15s;
+    }
+    .card:hover {
+      box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+      transform: translateY(-2px);
+    }
+    .card h2 { font-size: 1.15rem; margin: 0 0 0.5rem; color: var(--accent); }
+    .card p { margin: 0; color: var(--muted); font-size: 0.95rem; }
+    .tag {
+      display: inline-block;
+      font-size: 0.75rem;
+      padding: 0.15rem 0.5rem;
+      border-radius: 999px;
+      background: #eff6ff;
+      color: var(--accent);
+      margin-top: 0.75rem;
+      font-weight: 600;
+    }
+    ul.check { padding-left: 1.2rem; color: var(--muted); }
+    ul.check li { margin-bottom: 0.35rem; }
+    hr { border: 0; border-top: 1px solid var(--border); margin: 2rem 0; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>数学サイト CSS フレームワーク選定</h1>
+    <p class="lead">
+      同じレイアウト・コンポーネントを 4 つのモダンな CSS フレームワークで再現しています。<br>
+      ブラウザで開いて、数学コンテンツに合う見た目・保守性・拡張性を比較してください。
+    </p>
+
+    <div class="grid">
+      <a class="card" href="./tailwind.html">
+        <h2>Tailwind CSS v4</h2>
+        <p>ユーティリティファースト。カスタムデザインを細かく制御できる。</p>
+        <span class="tag">CDN script</span>
+      </a>
+      <a class="card" href="./open-props.html">
+        <h2>Open Props</h2>
+        <p>CSS カスタムプロパティのデザイントークン集。クラスレスで軽量。</p>
+        <span class="tag">CDN</span>
+      </a>
+      <a class="card" href="./pico.html">
+        <h2>Pico CSS</h2>
+        <p>クラスレスで美しい。HTML を汚さず、コンテンツ重視。</p>
+        <span class="tag">CDN</span>
+      </a>
+      <a class="card" href="./pure.html">
+        <h2>Pure CSS + Variables</h2>
+        <p>最小限のフレームワークに独自の CSS 変数でテーマを重ねる。</p>
+        <span class="tag">CDN</span>
+      </a>
+    </div>
+
+    <hr>
+
+    <h2>比較ポイント</h2>
+    <ul class="check">
+      <li>数式（KaTeX）との相性: フォントサイズ、行間、余白</li>
+      <li>ツールカード・グリッドの見た目</li>
+      <li>フォーム・ボタンの扱いやすさ</li>
+      <li>ダークモード対応のしやすさ</li>
+      <li>ビルドサイズ・パフォーマンス</li>
+      <li>Next.js / React との親和性</li>
+    </ul>
+  </div>
+</body>
+</html>

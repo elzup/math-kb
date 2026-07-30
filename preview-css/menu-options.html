@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Menu Options Preview - Math KB</title>
+  <style>
+    :root {
+      --brand: #795548;
+      --brand-light: #d7ccc8;
+      --brand-dark: #5d4037;
+      --accent: #d4a017;
+      --accent-light: #fff8e1;
+
+      --text: #212121;
+      --text-muted: #616161;
+      --text-light: #9e9e9e;
+
+      --bg: #fafafa;
+      --surface: #ffffff;
+      --border: #e0e0e0;
+      --radius: 8px;
+      --radius-sm: 6px;
+      --radius-round: 9999px;
+
+      --header-bg: #2d2520;
+      --header-bg-dark: #1a1512;
+      --header-text: #ffffff;
+      --header-text-muted: rgba(255, 255, 255, 0.7);
+      --header-hover: rgba(255, 255, 255, 0.1);
+
+      --shadow-1: 0 1px 3px rgba(0,0,0,0.08);
+      --shadow-2: 0 4px 12px rgba(0,0,0,0.12);
+
+      --size-1: 0.25rem;
+      --size-2: 0.5rem;
+      --size-3: 0.75rem;
+      --size-4: 1rem;
+      --size-5: 1.25rem;
+      --size-6: 1.5rem;
+      --size-7: 2rem;
+      --size-8: 3rem;
+
+      --font-size-0: 0.75rem;
+      --font-size-1: 0.875rem;
+      --font-size-2: 1rem;
+      --font-size-3: 1.25rem;
+      --font-size-4: 1.5rem;
+
+      --font-weight-5: 500;
+      --font-weight-6: 600;
+      --font-weight-7: 700;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --text: #f5f5f5;
+        --text-muted: #b0b0b0;
+        --text-light: #808080;
+        --bg: #1a1a1a;
+        --surface: #242424;
+        --border: #3a3a3a;
+      }
+    }
+
+    :root[data-theme="dark"] {
+      --text: #f5f5f5;
+      --text-muted: #b0b0b0;
+      --text-light: #808080;
+      --bg: #1a1a1a;
+      --surface: #242424;
+      --border: #3a3a3a;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      margin: 0;
+      padding: var(--size-6);
+      line-height: 1.5;
+    }
+
+    .page-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto var(--size-8);
+    }
+
+    .page-title {
+      font-size: var(--font-size-4);
+      font-weight: var(--font-weight-7);
+      margin: 0;
+    }
+
+    .theme-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--size-2);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-round);
+      padding: var(--size-2) var(--size-4);
+      font-size: var(--font-size-1);
+      color: var(--text);
+      cursor: pointer;
+      box-shadow: var(--shadow-1);
+    }
+
+    .theme-toggle:hover {
+      border-color: var(--brand-light);
+    }
+
+    .gallery {
+      display: grid;
+      gap: var(--size-8);
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .option {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow-1);
+    }
+
+    .option-header {
+      padding: var(--size-4) var(--size-5);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .option-id {
+      display: inline-block;
+      font-size: var(--font-size-0);
+      font-weight: var(--font-weight-6);
+      color: var(--brand);
+      background: var(--accent-light);
+      border-radius: var(--radius-sm);
+      padding: var(--size-1) var(--size-2);
+      margin-bottom: var(--size-2);
+    }
+
+    .option-name {
+      font-size: var(--font-size-3);
+      font-weight: var(--font-weight-7);
+      margin: 0 0 var(--size-1);
+    }
+
+    .option-desc {
+      font-size: var(--font-size-1);
+      color: var(--text-muted);
+      margin: 0;
+    }
+
+    .option-frame {
+      background: var(--bg);
+      padding: var(--size-6);
+    }
+
+    /* ========== Shared nav base ========== */
+    .nav {
+      background: var(--header-bg);
+      border-bottom: 1px solid var(--header-bg-dark);
+      position: relative;
+    }
+
+    .nav-inner {
+      height: 56px;
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0 var(--size-4);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      font-weight: var(--font-weight-7);
+      color: var(--header-text);
+      font-size: var(--font-size-2);
+      letter-spacing: -0.5px;
+      text-decoration: none;
+    }
+
+    .logo-muted {
+      font-weight: 400;
+      color: var(--header-text-muted);
+    }
+
+    .nav a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    /* ========== A-1: horizontal + category labels ========== */
+    .a1-links {
+      display: none;
+      align-items: center;
+      gap: var(--size-6);
+      font-size: var(--font-size-1);
+    }
+
+    @media (min-width: 768px) {
+      .a1-links { display: flex; }
+    }
+
+    .a1-group {
+      display: flex;
+      align-items: center;
+      gap: var(--size-2);
+    }
+
+    .a1-label {
+      font-size: var(--font-size-0);
+      font-weight: var(--font-weight-6);
+      color: var(--header-text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      border-right: 1px solid var(--header-text-muted);
+      padding-right: var(--size-2);
+    }
+
+    .a1-items {
+      display: flex;
+      gap: var(--size-4);
+    }
+
+    .a1-items a {
+      color: var(--header-text-muted);
+      font-weight: var(--font-weight-5);
+    }
+
+    .a1-items a:hover {
+      color: var(--header-text);
+    }
+
+    /* ========== A-2: dropdown categories ========== */
+    .a2-links {
+      display: none;
+      align-items: center;
+      gap: var(--size-2);
+      font-size: var(--font-size-1);
+    }
+
+    @media (min-width: 768px) {
+      .a2-links { display: flex; }
+    }
+
+    .a2-item {
+      position: relative;
+    }
+
+    .a2-trigger {
+      display: flex;
+      align-items: center;
+      gap: var(--size-1);
+      padding: var(--size-2) var(--size-3);
+      color: var(--header-text-muted);
+      font-weight: var(--font-weight-5);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+    }
+
+    .a2-trigger:hover {
+      color: var(--header-text);
+      background: var(--header-hover);
+    }
+
+    .a2-chevron {
+      width: 0;
+      height: 0;
+      border-left: 4px solid transparent;
+      border-right: 4px solid transparent;
+      border-top: 4px solid currentColor;
+    }
+
+    .a2-dropdown {
+      position: absolute;
+      top: calc(100% + 8px);
+      left: 0;
+      min-width: 180px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-2);
+      padding: var(--size-2);
+      display: none;
+      z-index: 100;
+    }
+
+    .a2-item:hover .a2-dropdown,
+    .a2-item:focus-within .a2-dropdown {
+      display: block;
+    }
+
+    .a2-dropdown a {
+      display: block;
+      padding: var(--size-2) var(--size-3);
+      color: var(--text);
+      border-radius: var(--radius-sm);
+      font-weight: var(--font-weight-5);
+    }
+
+    .a2-dropdown a:hover {
+      background: var(--bg);
+      color: var(--brand);
+    }
+
+    /* ========== A-3: hamburger drawer ========== */
+    .a3-menu-btn {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      width: 24px;
+      cursor: pointer;
+      padding: var(--size-2);
+    }
+
+    .a3-menu-btn span {
+      display: block;
+      height: 2px;
+      background: var(--header-text);
+      border-radius: 2px;
+    }
+
+    .a3-drawer {
+      position: absolute;
+      top: 56px;
+      right: 0;
+      width: 280px;
+      max-width: 90vw;
+      background: var(--surface);
+      border-left: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      border-bottom-left-radius: var(--radius);
+      box-shadow: var(--shadow-2);
+      padding: var(--size-4);
+      display: none;
+      z-index: 100;
+    }
+
+    .a3-drawer.open { display: block; }
+
+    .a3-section {
+      margin-bottom: var(--size-5);
+    }
+
+    .a3-section-title {
+      font-size: var(--font-size-0);
+      font-weight: var(--font-weight-6);
+      color: var(--brand);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: var(--size-2);
+    }
+
+    .a3-section a {
+      display: block;
+      padding: var(--size-2) 0;
+      color: var(--text);
+      font-weight: var(--font-weight-5);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .a3-section a:hover {
+      color: var(--brand);
+    }
+
+    /* ========== A-4: category tabs + page dropdown ========== */
+    .a4-links {
+      display: none;
+      align-items: flex-end;
+      height: 100%;
+      font-size: var(--font-size-1);
+    }
+
+    @media (min-width: 768px) {
+      .a4-links { display: flex; }
+    }
+
+    .a4-tab {
+      position: relative;
+      height: 100%;
+    }
+
+    .a4-tab-trigger {
+      display: flex;
+      align-items: center;
+      gap: var(--size-1);
+      height: 100%;
+      padding: 0 var(--size-5);
+      color: var(--header-text-muted);
+      font-weight: var(--font-weight-5);
+      border-bottom: 3px solid transparent;
+      cursor: pointer;
+    }
+
+    .a4-tab-trigger:hover,
+    .a4-tab.active .a4-tab-trigger {
+      color: var(--header-text);
+      background: var(--header-hover);
+      border-bottom-color: var(--accent);
+    }
+
+    .a4-dropdown {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      min-width: 180px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 0 0 var(--radius) var(--radius);
+      box-shadow: var(--shadow-2);
+      padding: var(--size-2);
+      display: none;
+      z-index: 100;
+    }
+
+    .a4-tab:hover .a4-dropdown,
+    .a4-tab:focus-within .a4-dropdown {
+      display: block;
+    }
+
+    .a4-dropdown a {
+      display: block;
+      padding: var(--size-2) var(--size-3);
+      color: var(--text);
+      border-radius: var(--radius-sm);
+      font-weight: var(--font-weight-5);
+    }
+
+    .a4-dropdown a:hover {
+      background: var(--bg);
+      color: var(--brand);
+    }
+
+    /* ========== A-5: mega menu ========== */
+    .a5-links {
+      display: none;
+      align-items: center;
+      gap: var(--size-2);
+      font-size: var(--font-size-1);
+    }
+
+    @media (min-width: 768px) {
+      .a5-links { display: flex; }
+    }
+
+    .a5-trigger {
+      display: flex;
+      align-items: center;
+      gap: var(--size-1);
+      padding: var(--size-2) var(--size-3);
+      color: var(--header-text-muted);
+      font-weight: var(--font-weight-5);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+    }
+
+    .a5-trigger:hover,
+    .a5-wrap:hover .a5-trigger {
+      color: var(--header-text);
+      background: var(--header-hover);
+    }
+
+    .a5-wrap {
+      position: static;
+    }
+
+    .a5-mega {
+      position: absolute;
+      top: 56px;
+      left: 0;
+      right: 0;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      box-shadow: var(--shadow-2);
+      display: none;
+      z-index: 100;
+    }
+
+    .a5-wrap:hover .a5-mega,
+    .a5-wrap:focus-within .a5-mega {
+      display: block;
+    }
+
+    .a5-inner {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: var(--size-6) var(--size-4);
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--size-6);
+    }
+
+    .a5-col-title {
+      font-size: var(--font-size-0);
+      font-weight: var(--font-weight-6);
+      color: var(--brand);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: var(--size-3);
+      padding-bottom: var(--size-2);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .a5-col a {
+      display: block;
+      padding: var(--size-2) 0;
+      color: var(--text);
+      font-weight: var(--font-weight-5);
+    }
+
+    .a5-col a:hover {
+      color: var(--brand);
+    }
+  </style>
+</head>
+<body>
+  <header class="page-header">
+    <h1 class="page-title">Menu Design Options</h1>
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+      <span id="themeIcon">🌙</span>
+      <span id="themeLabel">Dark</span>
+    </button>
+  </header>
+
+  <div class="gallery">
+    <!-- A-1 -->
+    <section class="option">
+      <div class="option-header">
+        <span class="option-id">A-1</span>
+        <h2 class="option-name">Horizontal links with category labels</h2>
+        <p class="option-desc">All pages are visible at a glance, grouped by small category tags.</p>
+      </div>
+      <div class="option-frame">
+        <nav class="nav">
+          <div class="nav-inner">
+            <a href="#" class="logo">Math<span class="logo-muted">/kb</span></a>
+            <div class="a1-links">
+              <div class="a1-group">
+                <span class="a1-label">数論</span>
+                <div class="a1-items">
+                  <a href="#">Van der Corput</a>
+                  <a href="#">Halton</a>
+                </div>
+              </div>
+              <div class="a1-group">
+                <span class="a1-label">確率</span>
+                <div class="a1-items">
+                  <a href="#">Monte Carlo</a>
+                </div>
+              </div>
+              <div class="a1-group">
+                <span class="a1-label">数値解析</span>
+                <div class="a1-items">
+                  <a href="#">Riffle Shuffle</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </nav>
+      </div>
+    </section>
+
+    <!-- A-2 -->
+    <section class="option">
+      <div class="option-header">
+        <span class="option-id">A-2</span>
+        <h2 class="option-name">Dropdown category menu</h2>
+        <p class="option-desc">Top-level categories open compact dropdowns on hover.</p>
+      </div>
+      <div class="option-frame">
+        <nav class="nav">
+          <div class="nav-inner">
+            <a href="#" class="logo">Math<span class="logo-muted">/kb</span></a>
+            <div class="a2-links">
+              <div class="a2-item">
+                <span class="a2-trigger" tabindex="0">
+                  数論 <span class="a2-chevron"></span>
+                </span>
+                <div class="a2-dropdown">
+                  <a href="#">Van der Corput</a>
+                  <a href="#">Halton</a>
+                </div>
+              </div>
+              <div class="a2-item">
+                <span class="a2-trigger" tabindex="0">
+                  確率・組み合わせ <span class="a2-chevron"></span>
+                </span>
+                <div class="a2-dropdown">
+                  <a href="#">Monte Carlo</a>
+                </div>
+              </div>
+              <div class="a2-item">
+                <span class="a2-trigger" tabindex="0">
+                  数値解析 <span class="a2-chevron"></span>
+                </span>
+                <div class="a2-dropdown">
+                  <a href="#">Riffle Shuffle</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </nav>
+      </div>
+    </section>
+
+    <!-- A-3 -->
+    <section class="option">
+      <div class="option-header">
+        <span class="option-id">A-3</span>
+        <h2 class="option-name">Hamburger + drawer</h2>
+        <p class="option-desc">Clean header with a slide-in drawer grouped by category.</p>
+      </div>
+      <div class="option-frame">
+        <nav class="nav">
+          <div class="nav-inner">
+            <a href="#" class="logo">Math<span class="logo-muted">/kb</span></a>
+            <div class="a3-menu-btn" onclick="this.nextElementSibling.classList.toggle('open')">
+              <span></span><span></span><span></span>
+            </div>
+          </div>
+          <div class="a3-drawer">
+            <div class="a3-section">
+              <div class="a3-section-title">数論</div>
+              <a href="#">Van der Corput</a>
+              <a href="#">Halton</a>
+            </div>
+            <div class="a3-section">
+              <div class="a3-section-title">確率・組み合わせ</div>
+              <a href="#">Monte Carlo</a>
+            </div>
+            <div class="a3-section">
+              <div class="a3-section-title">数値解析</div>
+              <a href="#">Riffle Shuffle</a>
+            </div>
+          </div>
+        </nav>
+      </div>
+    </section>
+
+    <!-- A-4 -->
+    <section class="option">
+      <div class="option-header">
+        <span class="option-id">A-4</span>
+        <h2 class="option-name">Category tabs with page dropdown</h2>
+        <p class="option-desc">Tabs emphasize categories; pages appear in focused dropdowns.</p>
+      </div>
+      <div class="option-frame">
+        <nav class="nav">
+          <div class="nav-inner">
+            <a href="#" class="logo">Math<span class="logo-muted">/kb</span></a>
+            <div class="a4-links">
+              <div class="a4-tab active">
+                <span class="a4-tab-trigger" tabindex="0">
+                  数論 <span class="a2-chevron"></span>
+                </span>
+                <div class="a4-dropdown">
+                  <a href="#">Van der Corput</a>
+                  <a href="#">Halton</a>
+                </div>
+              </div>
+              <div class="a4-tab">
+                <span class="a4-tab-trigger" tabindex="0">
+                  確率・組み合わせ <span class="a2-chevron"></span>
+                </span>
+                <div class="a4-dropdown">
+                  <a href="#">Monte Carlo</a>
+                </div>
+              </div>
+              <div class="a4-tab">
+                <span class="a4-tab-trigger" tabindex="0">
+                  数値解析 <span class="a2-chevron"></span>
+                </span>
+                <div class="a4-dropdown">
+                  <a href="#">Riffle Shuffle</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </nav>
+      </div>
+    </section>
+
+    <!-- A-5 -->
+    <section class="option">
+      <div class="option-header">
+        <span class="option-id">A-5</span>
+        <h2 class="option-name">Mega menu</h2>
+        <p class="option-desc">One button reveals every category and page in a wide panel.</p>
+      </div>
+      <div class="option-frame">
+        <nav class="nav">
+          <div class="nav-inner">
+            <a href="#" class="logo">Math<span class="logo-muted">/kb</span></a>
+            <div class="a5-links">
+              <a href="#">Home</a>
+              <div class="a5-wrap">
+                <span class="a5-trigger" tabindex="0">
+                  Explore <span class="a2-chevron"></span>
+                </span>
+                <div class="a5-mega">
+                  <div class="a5-inner">
+                    <div class="a5-col">
+                      <div class="a5-col-title">数論</div>
+                      <a href="#">Van der Corput</a>
+                      <a href="#">Halton</a>
+                    </div>
+                    <div class="a5-col">
+                      <div class="a5-col-title">確率・組み合わせ</div>
+                      <a href="#">Monte Carlo</a>
+                    </div>
+                    <div class="a5-col">
+                      <div class="a5-col-title">数値解析</div>
+                      <a href="#">Riffle Shuffle</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </nav>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    const root = document.documentElement;
+    const btn = document.getElementById('themeToggle');
+    const icon = document.getElementById('themeIcon');
+    const label = document.getElementById('themeLabel');
+
+    function applyDark(isDark) {
+      root.setAttribute('data-theme', isDark ? 'dark' : 'light');
+      icon.textContent = isDark ? '☀️' : '🌙';
+      label.textContent = isDark ? 'Light' : 'Dark';
+    }
+
+    btn.addEventListener('click', () => {
+      const current = root.getAttribute('data-theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const isDark = current ? current === 'dark' : prefersDark;
+      applyDark(!isDark);
+    });
+  </script>
+</body>
+</html>

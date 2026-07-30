@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tailwind CSS v4 Preview - Math Site</title>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+    onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}]});"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+    body { font-family: 'Inter', system-ui, sans-serif; }
+  </style>
+</head>
+<body class="bg-gray-50 text-gray-900">
+  <nav class="bg-white border-b border-gray-200 sticky top-0 z-50">
+    <div class="max-w-6xl mx-auto px-4 h-14 flex items-center justify-between">
+      <a href="#" class="font-bold text-lg tracking-tight text-indigo-600">Math KB</a>
+      <div class="hidden sm:flex gap-6 text-sm font-medium text-gray-600">
+        <a href="#" class="hover:text-indigo-600">関数</a>
+        <a href="#" class="hover:text-indigo-600">幾何</a>
+        <a href="#" class="hover:text-indigo-600">確率</a>
+        <a href="#" class="hover:text-indigo-600">統計</a>
+        <a href="#" class="hover:text-indigo-600">線形代数</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="bg-white border-b border-gray-200">
+    <div class="max-w-6xl mx-auto px-4 py-16 sm:py-24 text-center">
+      <h1 class="text-4xl sm:text-5xl font-bold tracking-tight mb-4">数学を見て、触れて、理解する</h1>
+      <p class="text-lg text-gray-600 max-w-2xl mx-auto mb-8">
+        インタラクティブな計算ツールと可視化で、式の意味を直感的に捉えます。
+      </p>
+      <div class="text-xl text-gray-800 bg-gray-100 inline-block px-6 py-3 rounded-lg">
+        $$ e^{i\pi} + 1 = 0 $$
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-4 py-12">
+    <h2 class="text-2xl font-bold mb-6">ツール一覧</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+      <div class="bg-white rounded-xl border border-gray-200 p-6 shadow-sm hover:shadow-md transition-shadow">
+        <div class="w-10 h-10 rounded-lg bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold mb-4">f(x)</div>
+        <h3 class="font-semibold text-lg mb-2">関数グラフ</h3>
+        <p class="text-sm text-gray-600">任意の式を入力してリアルタイムにプロット。</p>
+      </div>
+      <div class="bg-white rounded-xl border border-gray-200 p-6 shadow-sm hover:shadow-md transition-shadow">
+        <div class="w-10 h-10 rounded-lg bg-emerald-100 text-emerald-600 flex items-center justify-center font-bold mb-4">△</div>
+        <h3 class="font-semibold text-lg mb-2">幾何シミュレータ</h3>
+        <p class="text-sm text-gray-600">図形の性質をドラッグで確認。</p>
+      </div>
+      <div class="bg-white rounded-xl border border-gray-200 p-6 shadow-sm hover:shadow-md transition-shadow">
+        <div class="w-10 h-10 rounded-lg bg-amber-100 text-amber-600 flex items-center justify-center font-bold mb-4">P</div>
+        <h3 class="font-semibold text-lg mb-2">確率実験</h3>
+        <p class="text-sm text-gray-600">モンテカルロ法で確率を体験。</p>
+      </div>
+      <div class="bg-white rounded-xl border border-gray-200 p-6 shadow-sm hover:shadow-md transition-shadow">
+        <div class="w-10 h-10 rounded-lg bg-rose-100 text-rose-600 flex items-center justify-center font-bold mb-4">Σ</div>
+        <h3 class="font-semibold text-lg mb-2">統計可視化</h3>
+        <p class="text-sm text-gray-600">分布、相関、回帰を即座に描画。</p>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
+      <section class="bg-white rounded-xl border border-gray-200 p-6">
+        <h2 class="text-xl font-bold mb-4">二次方程式の解</h2>
+        <p class="text-gray-600 mb-4">$ ax^2 + bx + c = 0 $ の解は判別式 $ D = b^2 - 4ac $ によって決まります。</p>
+        <div class="bg-gray-50 rounded-lg p-4 text-center text-lg">
+          $$ x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a} $$
+        </div>
+      </section>
+
+      <section class="bg-white rounded-xl border border-gray-200 p-6">
+        <h2 class="text-xl font-bold mb-4">範囲指定</h2>
+        <label class="block text-sm font-medium text-gray-700 mb-1">関数 $ f(x) = x^2 $ の描画範囲</label>
+        <div class="flex gap-3">
+          <input type="number" value="-5" class="w-full rounded-lg border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+          <span class="self-center text-gray-500">〜</span>
+          <input type="number" value="5" class="w-full rounded-lg border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+        </div>
+        <button class="mt-4 w-full bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2 px-4 rounded-lg transition-colors">適用</button>
+      </section>
+    </div>
+
+    <section class="bg-white rounded-xl border border-gray-200 p-6">
+      <h2 class="text-xl font-bold mb-4">数学定数</h2>
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm">
+          <thead class="bg-gray-50 border-b border-gray-200">
+            <tr>
+              <th class="text-left py-3 px-4 font-medium text-gray-700">記号</th>
+              <th class="text-left py-3 px-4 font-medium text-gray-700">名称</th>
+              <th class="text-right py-3 px-4 font-medium text-gray-700">値</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-gray-100">
+            <tr><td class="py-3 px-4 font-mono">$\pi$</td><td class="py-3 px-4">円周率</td><td class="py-3 px-4 text-right font-mono">3.14159...</td></tr>
+            <tr><td class="py-3 px-4 font-mono">$e$</td><td class="py-3 px-4">ネイピア数</td><td class="py-3 px-4 text-right font-mono">2.71828...</td></tr>
+            <tr><td class="py-3 px-4 font-mono">$\phi$</td><td class="py-3 px-4">黄金比</td><td class="py-3 px-4 text-right font-mono">1.61803...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <footer class="border-t border-gray-200 bg-white mt-12">
+    <div class="max-w-6xl mx-auto px-4 py-8 text-sm text-gray-500 flex justify-between">
+      <span>&copy; 2026 Math KB</span>
+      <a href="#" class="hover:text-gray-800">GitHub</a>
+    </div>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page List Options Preview - Math KB</title>
+  <style>
+    :root {
+      --brand: #212121;
+      --brand-light: #e0e0e0;
+      --brand-dark: #000000;
+      --accent: #555555;
+      --accent-light: #f5f5f5;
+
+      --text: #212121;
+      --text-muted: #616161;
+      --text-light: #9e9e9e;
+
+      --bg: #fafafa;
+      --surface: #ffffff;
+      --border: #e0e0e0;
+      --radius: 4px;
+      --radius-sm: 4px;
+      --radius-round: 9999px;
+
+      --header-bg: #1a1a1a;
+      --header-bg-dark: #000000;
+      --header-text: #ffffff;
+      --header-text-muted: rgba(255, 255, 255, 0.7);
+      --header-hover: rgba(255, 255, 255, 0.1);
+
+      --shadow-1: 0 1px 2px rgba(0,0,0,0.06);
+
+      --size-1: 0.25rem;
+      --size-2: 0.5rem;
+      --size-3: 0.75rem;
+      --size-4: 1rem;
+      --size-5: 1.25rem;
+      --size-6: 1.5rem;
+
+      --font-size-0: 0.75rem;
+      --font-size-1: 0.875rem;
+      --font-size-2: 1rem;
+      --font-size-3: 1.25rem;
+      --font-size-4: 1.5rem;
+
+      --font-weight-5: 500;
+      --font-weight-6: 600;
+      --font-weight-7: 700;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme]) {
+        --text: #f5f5f5;
+        --text-muted: #b0b0b0;
+        --text-light: #808080;
+        --bg: #1a1a1a;
+        --surface: #242424;
+        --border: #3a3a3a;
+      }
+    }
+
+    :root[data-theme="dark"] {
+      --text: #f5f5f5;
+      --text-muted: #b0b0b0;
+      --text-light: #808080;
+      --bg: #1a1a1a;
+      --surface: #242424;
+      --border: #3a3a3a;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      margin: 0;
+      padding: var(--size-6);
+      line-height: 1.5;
+    }
+
+    .page-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto var(--size-8);
+    }
+
+    .page-title {
+      font-size: var(--font-size-4);
+      font-weight: var(--font-weight-7);
+      margin: 0;
+    }
+
+    .theme-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--size-2);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-round);
+      padding: var(--size-2) var(--size-4);
+      font-size: var(--font-size-1);
+      color: var(--text);
+      cursor: pointer;
+      box-shadow: var(--shadow-1);
+    }
+
+    .gallery {
+      display: grid;
+      gap: var(--size-8);
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .option {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow-1);
+    }
+
+    .option-header {
+      padding: var(--size-4) var(--size-5);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .option-id {
+      display: inline-block;
+      font-size: var(--font-size-0);
+      font-weight: var(--font-weight-6);
+      color: var(--brand);
+      background: var(--accent-light);
+      border-radius: var(--radius-sm);
+      padding: var(--size-1) var(--size-2);
+      margin-bottom: var(--size-2);
+    }
+
+    .option-name {
+      font-size: var(--font-size-3);
+      font-weight: var(--font-weight-7);
+      margin: 0 0 var(--size-1);
+    }
+
+    .option-desc {
+      font-size: var(--font-size-1);
+      color: var(--text-muted);
+      margin: 0;
+    }
+
+    .option-frame {
+      background: var(--bg);
+      padding: var(--size-6);
+      max-height: 480px;
+      overflow-y: auto;
+    }
+
+    .nav {
+      background: var(--header-bg);
+      border-bottom: 1px solid var(--header-bg-dark);
+      height: 56px;
+      display: flex;
+      align-items: center;
+      margin: calc(var(--size-6) * -1) calc(var(--size-6) * -1) var(--size-5);
+      padding-inline: var(--size-6);
+    }
+
+    .logo { color: var(--header-text); font-weight: 700; }
+    .logo-muted { font-weight: 300; color: var(--header-text-muted); }
+
+    .section-title {
+      font-size: var(--font-size-3);
+      font-weight: var(--font-weight-7);
+      margin: var(--size-6) 0 var(--size-2);
+      padding-bottom: var(--size-2);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .section-title:first-child { margin-top: 0; }
+
+    .section-text {
+      color: var(--text-muted);
+      font-size: var(--font-size-1);
+      margin-bottom: var(--size-4);
+    }
+
+    .list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .list li {
+      border-bottom: 1px solid var(--border);
+      padding: var(--size-3) 0;
+    }
+
+    .list a {
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .list a:hover .list-title {
+      color: var(--brand);
+    }
+
+    .list-title {
+      font-weight: var(--font-weight-6);
+      font-size: var(--font-size-1);
+      margin-bottom: var(--size-1);
+    }
+
+    .list-meta {
+      font-size: var(--font-size-0);
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    .tag {
+      display: inline-block;
+      font-size: var(--font-size-0);
+      color: var(--text-muted);
+      margin-right: var(--size-2);
+    }
+
+    .tag::before { content: "#"; }
+
+    .table {
+      width: 100%;
+      font-size: var(--font-size-1);
+      border-collapse: collapse;
+    }
+
+    .table th,
+    .table td {
+      padding: var(--size-2) var(--size-3);
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .table th {
+      color: var(--text-muted);
+      font-weight: var(--font-weight-6);
+      font-size: var(--font-size-0);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--size-5);
+    }
+
+    @media (min-width: 640px) {
+      .grid-2 { grid-template-columns: 1fr 1fr; }
+    }
+
+    .segment {
+      display: inline-flex;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 2px;
+      gap: 2px;
+      flex-wrap: wrap;
+    }
+
+    .segment label {
+      padding: var(--size-1) var(--size-3);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      font-size: var(--font-size-1);
+      color: var(--text-muted);
+    }
+
+    .segment input { position: absolute; opacity: 0; }
+    .segment input:checked + label {
+      background: var(--surface);
+      color: var(--text);
+      box-shadow: var(--shadow-1);
+    }
+
+    .search {
+      width: 100%;
+      padding: var(--size-2) var(--size-3);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      font: inherit;
+      background: var(--surface);
+      color: var(--text);
+    }
+
+    .sidebar-layout {
+      display: grid;
+      grid-template-columns: 140px 1fr;
+      gap: var(--size-5);
+    }
+
+    .sidebar { font-size: var(--font-size-1); }
+
+    .sidebar-group { margin-bottom: var(--size-4); }
+
+    .sidebar-title {
+      font-weight: var(--font-weight-6);
+      margin-bottom: var(--size-2);
+      color: var(--text-muted);
+      font-size: var(--font-size-0);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .sidebar a {
+      display: block;
+      padding: var(--size-1) 0;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .sidebar a:hover { color: var(--brand); }
+
+    .tag-cloud {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--size-2);
+      margin-bottom: var(--size-5);
+    }
+
+    .tag-cloud .tag {
+      cursor: pointer;
+      padding: var(--size-1) var(--size-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+    }
+
+    .tag-cloud .tag.active {
+      background: var(--brand);
+      color: white;
+      border-color: var(--brand);
+    }
+
+    .result-count {
+      font-size: var(--font-size-0);
+      color: var(--text-muted);
+      margin-bottom: var(--size-3);
+    }
+
+    .compact-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: var(--size-2) var(--size-4);
+    }
+
+    .compact-grid a {
+      color: var(--text);
+      text-decoration: none;
+      font-size: var(--font-size-1);
+      padding: var(--size-1) 0;
+    }
+
+    .compact-grid a:hover { color: var(--brand); }
+
+    .tools-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--size-5);
+    }
+
+    @media (max-width: 900px) {
+      .tools-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    @media (max-width: 600px) {
+      .tools-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    .tools-label {
+      font-weight: var(--font-weight-6);
+      font-size: var(--font-size-0);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--text-muted);
+      margin-bottom: var(--size-3);
+    }
+
+    .tools-item {
+      display: flex;
+      align-items: center;
+      gap: var(--size-2);
+      padding: var(--size-1) 0;
+      color: var(--text);
+      text-decoration: none;
+      font-size: var(--font-size-1);
+      opacity: 0.9;
+    }
+
+    .tools-item:hover {
+      opacity: 1;
+      color: var(--brand);
+    }
+
+    .tools-icon {
+      width: 1rem;
+      text-align: center;
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+    }
+  </style>
+</head>
+<body>
+  <header class="page-header">
+    <h1 class="page-title">Page List Options (no cards, 40 pages scale)</h1>
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+      <span id="themeIcon">🌙</span>
+      <span id="themeLabel">Dark</span>
+    </button>
+  </header>
+
+  <div class="gallery">
+    <!-- B-1 -->
+    <section class="option">
+      <div class="option-header">
+        <span class="option-id">B-1</span>
+        <h2 class="option-name">Category flat list</h2>
+        <p class="option-desc">カテゴリ見出し + 区切り線だけのフラットなリスト。</p>
+      </div>
+      <div class="option-frame">
+        <div class="nav"><span class="logo">Math<span class="logo-muted">/kb</span></span></div>
+        <h3 class="section-title">数論</h3>
+        <ul class="list">
+          <li><a href="#"><div class="list-title">Van der Corput Sequence</div><div class="list-meta">1 次元の低差異数列 <span class="tag">低差異</span><span class="tag">数論</span></div></a></li>
+          <li><a href="#"><div class="list-title">Halton Sequence</div><div class="list-meta">2 次元低差異数列 <span class="tag">準モンテカルロ</span></div></a></li>
+          <li><a href="#"><div class="list-title">Sobol Sequence</div><div class="list-meta">デジタルネットに基づく列 <span class="tag">低差異</span></div></a></li>
+        </ul>
+        <h3 class="section-title">確率・組み合わせ</h3>
+        <ul class="list">
+          <li><a href="#"><div class="list-title">Monte Carlo 収束比較</div><div class="list-meta">ランダムサンプリング <span class="tag">数値積分</span></div></a></li>
+          <li><a href="#"><div class="list-title">Riffle Shuffle</div><div class="list-meta">カードシャッフルの数学 <span class="tag">マルコフ連鎖</span></div></a></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- B-2 -->
+    <section class="option">
+      <div class="option-header">
+        <span class="option-id">B-2</span>
+        <h2 class="option-name">Compact table</h2>
+        <p class="option-desc">テーブル形式。ページ名、説明、タグを 1 行にまとめる。</p>
+      </div>
+      <div class="option-frame">
+        <div class="nav"><span class="logo">Math<span class="logo-muted">/kb</span></span></div>
+        <table class="table">
+          <thead><tr><th>ページ</th><th>説明</th><th>タグ</th></tr></thead>
+          <tbody>
+            <tr><td>Van der Corput</td><td>1 次元低差異数列</td><td><span class="tag">低差異</span></td></tr>
+            <tr><td>Halton</td><td>2 次元低差異数列</td><td><span class="tag">準モンテカルロ</span></td></tr>
+            <tr><td>Sobol</td><td>デジタルネットに基づく列</td><td><span class="tag">低差異</span></td></tr>
+            <tr><td>Monte Carlo</td><td>ランダムサンプリングで π を推定</td><td><span class="tag">数値積分</span></td></tr>
+            <tr><td>Riffle Shuffle</td><td>カードシャッフルの数学</td><td><span class="tag">マルコフ連鎖</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- B-3 -->
+    <section class="option">
+      <div class="option-header">
+        <span class="option-id">B-3</span>
+        <h2 class="option-name">Two-column compact list</h2>
+        <p class="option-desc">2 段組のコンパクトなリンクリスト。密度を高める。</p>
+      </div>
+      <div class="option-frame">
+        <div class="nav"><span class="logo">Math<span class="logo-muted">/kb</span></span></div>
+        <h3 class="section-title">数論</h3>
+        <div class="compact-grid">
+          <a href="#">Van der Corput</a>
+          <a href="#">Halton</a>
+          <a href="#">Sobol</a>
+          <a href="#">Niederreiter</a>
+          <a href="#">Hammersley</a>
+          <a href="#">Faure</a>
+        </div>
+        <h3 class="section-title">確率・組み合わせ</h3>
+        <div class="compact-grid">
+          <a href="#">Monte Carlo</a>
+          <a href="#">Quasi-Monte Carlo</a>
+          <a href="#">Riffle Shuffle</a>
+          <a href="#">Polya's Urn</a>
+          <a href="#">Random Walk</a>
+          <a href="#">Markov Chain</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- B-4 -->
+    <section class="option">
+      <div class="option-header">
+        <span class="option-id">B-4</span>
+        <h2 class="option-name">Tag cloud + flat list</h2>
+        <p class="option-desc">タグで絞り込み、結果をフラットなリストで表示。</p>
+      </div>
+      <div class="option-frame">
+        <div class="nav"><span class="logo">Math<span class="logo-muted">/kb</span></span></div>
+        <div class="tag-cloud">
+          <span class="tag active">すべて</span>
+          <span class="tag">低差異</span>
+          <span class="tag">数値積分</span>
+          <span class="tag">確率過程</span>
+          <span class="tag">マルコフ連鎖</span>
+          <span class="tag">組み合わせ</span>
+          <span class="tag">最適化</span>
+        </div>
+        <div class="result-count">5 / 40 ページ</div>
+        <ul class="list">
+          <li><a href="#"><div class="list-title">Van der Corput Sequence</div><div class="list-meta">1 次元低差異数列 <span class="tag">低差異</span></div></a></li>
+          <li><a href="#"><div class="list-title">Halton Sequence</div><div class="list-meta">2 次元低差異数列 <span class="tag">低差異</span></div></a></li>
+          <li><a href="#"><div class="list-title">Sobol Sequence</div><div class="list-meta">デジタルネット <span class="tag">低差異</span></div></a></li>
+          <li><a href="#"><div class="list-title">Quasi-Monte Carlo</div><div class="list-meta">低差異を使った積分 <span class="tag">数値積分</span></div></a></li>
+          <li><a href="#"><div class="list-title">Latin Hypercube</div><div class="list-meta">層化サンプリング <span class="tag">数値積分</span></div></a></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- B-5 -->
+    <section class="option">
+      <div class="option-header">
+        <span class="option-id">B-5</span>
+        <h2 class="option-name">Sidebar + flat list</h2>
+        <p class="option-desc">左にカテゴリ＋タグ、右にリスト。40 ページでも俯瞰しやすい。</p>
+      </div>
+      <div class="option-frame">
+        <div class="nav"><span class="logo">Math<span class="logo-muted">/kb</span></span></div>
+        <div class="sidebar-layout">
+          <aside class="sidebar">
+            <div class="sidebar-group">
+              <div class="sidebar-title">カテゴリ</div>
+              <a href="#">数論</a>
+              <a href="#">確率・組み合わせ</a>
+              <a href="#">数値解析</a>
+              <a href="#">線形代数</a>
+              <a href="#">最適化</a>
+            </div>
+            <div class="sidebar-group">
+              <div class="sidebar-title">タグ</div>
+              <a href="#">低差異</a>
+              <a href="#">数値積分</a>
+              <a href="#">確率過程</a>
+              <a href="#">マルコフ連鎖</a>
+            </div>
+          </aside>
+          <main>
+            <h3 class="section-title" style="margin-top: 0;">数論</h3>
+            <ul class="list">
+              <li><a href="#"><div class="list-title">Van der Corput Sequence</div><div class="list-meta">1 次元低差異数列 <span class="tag">低差異</span></div></a></li>
+              <li><a href="#"><div class="list-title">Halton Sequence</div><div class="list-meta">2 次元低差異数列 <span class="tag">準モンテカルロ</span></div></a></li>
+              <li><a href="#"><div class="list-title">Sobol Sequence</div><div class="list-meta">デジタルネット <span class="tag">低差異</span></div></a></li>
+            </ul>
+          </main>
+        </div>
+      </div>
+    </section>
+
+    <!-- B-6 -->
+    <section class="option">
+      <div class="option-header">
+        <span class="option-id">B-6</span>
+        <h2 class="option-name">Tools-style icon grid</h2>
+        <p class="option-desc">../tools と同じく、カテゴリ別にアイコン付きの 4 カラムグリッド。</p>
+      </div>
+      <div class="option-frame">
+        <div class="nav"><span class="logo">Math<span class="logo-muted">/kb</span></span></div>
+        <div class="tools-grid">
+          <div class="tools-group">
+            <div class="tools-label">数論</div>
+            <a class="tools-item" href="#"><span class="tools-icon">⊥</span>Van der Corput</a>
+            <a class="tools-item" href="#"><span class="tools-icon">⊞</span>Halton</a>
+            <a class="tools-item" href="#"><span class="tools-icon">ℤ</span>Sobol</a>
+            <a class="tools-item" href="#"><span class="tools-icon">#</span>Niederreiter</a>
+            <a class="tools-item" href="#"><span class="tools-icon">◇</span>Hammersley</a>
+          </div>
+          <div class="tools-group">
+            <div class="tools-label">確率・組み合わせ</div>
+            <a class="tools-item" href="#"><span class="tools-icon">π</span>Monte Carlo</a>
+            <a class="tools-item" href="#"><span class="tools-icon">∫</span>Quasi-Monte Carlo</a>
+            <a class="tools-item" href="#"><span class="tools-icon">♠</span>Riffle Shuffle</a>
+            <a class="tools-item" href="#"><span class="tools-icon">🥜</span>Polya's Urn</a>
+            <a class="tools-item" href="#"><span class="tools-icon">🎲</span>Random Walk</a>
+          </div>
+          <div class="tools-group">
+            <div class="tools-label">数値解析</div>
+            <a class="tools-item" href="#"><span class="tools-icon">Σ</span>Simpson's Rule</a>
+            <a class="tools-item" href="#"><span class="tools-icon">∂</span>Newton-Raphson</a>
+            <a class="tools-item" href="#"><span class="tools-icon">≈</span>Runge-Kutta</a>
+            <a class="tools-item" href="#"><span class="tools-icon">📉</span>Gradient Descent</a>
+          </div>
+          <div class="tools-group">
+            <div class="tools-label">線形代数</div>
+            <a class="tools-item" href="#"><span class="tools-icon">🧮</span>Matrix Ops</a>
+            <a class="tools-item" href="#"><span class="tools-icon">🔁</span>PCA</a>
+            <a class="tools-item" href="#"><span class="tools-icon">📐</span>Vector Projection</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    const root = document.documentElement;
+    const btn = document.getElementById('themeToggle');
+    const icon = document.getElementById('themeIcon');
+    const label = document.getElementById('themeLabel');
+
+    function applyDark(isDark) {
+      root.setAttribute('data-theme', isDark ? 'dark' : 'light');
+      icon.textContent = isDark ? '☀️' : '🌙';
+      label.textContent = isDark ? 'Light' : 'Dark';
+    }
+
+    btn.addEventListener('click', () => {
+      const current = root.getAttribute('data-theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const isDark = current ? current === 'dark' : prefersDark;
+      applyDark(!isDark);
+    });
+  </script>
+</body>
+</html>

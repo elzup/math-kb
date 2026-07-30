@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pure CSS + Variables Preview - Math Site</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/pure-min.css" integrity="sha384-X38yupPHaWmMzC4xDpRr5RM7yJvf1X6gaHhJEdL5XbBlIogG2E4QNLjGOt8X1C5A" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+    onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}]});"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    :root {
+      --font: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --brand: #4f46e5;
+      --brand-dark: #4338ca;
+      --bg: #f8fafc;
+      --surface: #ffffff;
+      --text: #0f172a;
+      --muted: #64748b;
+      --border: #e2e8f0;
+      --radius: 12px;
+      --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+    }
+    body { font-family: var(--font); background: var(--bg); color: var(--text); margin: 0; }
+    .wrap { max-width: 1100px; margin: 0 auto; padding: 0 1rem; }
+    .nav {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    .nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 56px; }
+    .logo { font-weight: 700; color: var(--brand); text-decoration: none; font-size: 1.1rem; }
+    .nav-links { display: flex; gap: 1.5rem; font-size: 0.9rem; }
+    .nav-links a { color: var(--muted); text-decoration: none; }
+    .nav-links a:hover { color: var(--brand); }
+
+    .hero {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      text-align: center;
+      padding: 4rem 1rem;
+    }
+    .hero h1 { font-size: clamp(2rem, 5vw, 3rem); font-weight: 800; margin: 0 0 0.75rem; }
+    .hero p { color: var(--muted); font-size: 1.15rem; max-width: 640px; margin: 0 auto 1.5rem; }
+    .hero-formula {
+      display: inline-block;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1rem 2rem;
+      font-size: 1.35rem;
+    }
+
+    main { padding: 2.5rem 0; }
+    h2 { font-size: 1.5rem; font-weight: 700; margin: 0 0 1rem; }
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2.5rem;
+    }
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.25rem;
+      box-shadow: var(--shadow);
+    }
+    .card-icon {
+      width: 2.5rem;
+      height: 2.5rem;
+      border-radius: 0.5rem;
+      display: grid;
+      place-items: center;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+    }
+    .card h3 { font-size: 1.1rem; font-weight: 700; margin: 0 0 0.35rem; }
+    .card p { color: var(--muted); margin: 0; font-size: 0.9rem; }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.25rem;
+      margin-bottom: 2.5rem;
+    }
+    @media (min-width: 900px) { .two-col { grid-template-columns: 1fr 1fr; } }
+    .panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+    }
+    .panel h2 { font-size: 1.25rem; margin-bottom: 0.75rem; }
+    .panel p { color: var(--muted); margin-bottom: 1rem; }
+    .formula-box {
+      background: var(--bg);
+      border-radius: var(--radius);
+      padding: 1.25rem;
+      text-align: center;
+      font-size: 1.15rem;
+    }
+    .pure-form label { display: block; margin-bottom: 0.35rem; color: var(--text); font-weight: 500; }
+    .pure-form input[type="number"] {
+      width: 100%;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.6rem 0.75rem;
+      font: inherit;
+      box-sizing: border-box;
+    }
+    .range-row { display: flex; gap: 0.75rem; align-items: center; }
+    .range-row input { flex: 1; }
+    .pure-button-primary {
+      background: var(--brand);
+      border-radius: 8px;
+      margin-top: 0.75rem;
+      width: 100%;
+    }
+    .pure-button-primary:hover { background: var(--brand-dark); }
+
+    .pure-table { width: 100%; border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+    .pure-table th { background: var(--bg); }
+    .pure-table td:last-child, .pure-table th:last-child { text-align: right; font-family: ui-monospace, monospace; }
+
+    footer {
+      border-top: 1px solid var(--border);
+      background: var(--surface);
+      padding: 1.5rem 0;
+    }
+    .footer-inner { display: flex; justify-content: space-between; font-size: 0.875rem; color: var(--muted); }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="wrap">
+      <a href="#" class="logo">Math KB</a>
+      <div class="nav-links">
+        <a href="#">関数</a>
+        <a href="#">幾何</a>
+        <a href="#">確率</a>
+        <a href="#">統計</a>
+        <a href="#">線形代数</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="wrap">
+      <h1>数学を見て、触れて、理解する</h1>
+      <p>インタラクティブな計算ツールと可視化で、式の意味を直感的に捉えます。</p>
+      <div class="hero-formula">$$ e^{i\pi} + 1 = 0 $$</div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <h2>ツール一覧</h2>
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-icon" style="background: #eef2ff; color: #4f46e5;">f(x)</div>
+        <h3>関数グラフ</h3>
+        <p>任意の式を入力してリアルタイムにプロット。</p>
+      </div>
+      <div class="card">
+        <div class="card-icon" style="background: #ecfdf5; color: #059669;">△</div>
+        <h3>幾何シミュレータ</h3>
+        <p>図形の性質をドラッグで確認。</p>
+      </div>
+      <div class="card">
+        <div class="card-icon" style="background: #fffbeb; color: #d97706;">P</div>
+        <h3>確率実験</h3>
+        <p>モンテカルロ法で確率を体験。</p>
+      </div>
+      <div class="card">
+        <div class="card-icon" style="background: #fff1f2; color: #e11d48;">Σ</div>
+        <h3>統計可視化</h3>
+        <p>分布、相関、回帰を即座に描画。</p>
+      </div>
+    </div>
+
+    <div class="two-col">
+      <section class="panel">
+        <h2>二次方程式の解</h2>
+        <p>$ ax^2 + bx + c = 0 $ の解は判別式 $ D = b^2 - 4ac $ によって決まります。</p>
+        <div class="formula-box">$$ x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a} $$</div>
+      </section>
+      <section class="panel">
+        <h2>範囲指定</h2>
+        <form class="pure-form">
+          <label for="min">関数 $ f(x) = x^2 $ の描画範囲</label>
+          <div class="range-row">
+            <input type="number" id="min" value="-5">
+            <span style="color: var(--muted);">〜</span>
+            <input type="number" id="max" value="5">
+          </div>
+          <button type="button" class="pure-button pure-button-primary">適用</button>
+        </form>
+      </section>
+    </div>
+
+    <section class="panel">
+      <h2>数学定数</h2>
+      <table class="pure-table pure-table-bordered">
+        <thead>
+          <tr><th>記号</th><th>名称</th><th style="text-align: right;">値</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>$\pi$</td><td>円周率</td><td>3.14159...</td></tr>
+          <tr><td>$e$</td><td>ネイピア数</td><td>2.71828...</td></tr>
+          <tr><td>$\phi$</td><td>黄金比</td><td>1.61803...</td></tr>
+        </tbody>
+      </table>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap footer-inner">
+      <span>&copy; 2026 Math KB</span>
+      <a href="#" style="color: var(--muted);">GitHub</a>
+    </div>
+  </footer>
+</body>
+</html>

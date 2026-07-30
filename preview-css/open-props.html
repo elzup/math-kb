@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Open Props Preview - Math Site</title>
+  <link rel="stylesheet" href="https://unpkg.com/open-props/normalize.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/open-props">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+    onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}]});"></script>
+  <style>
+    :root {
+      --brand: var(--indigo-7);
+      --brand-light: var(--indigo-1);
+      --surface: var(--gray-0);
+      --text: var(--gray-9);
+      --text-muted: var(--gray-6);
+    }
+    body {
+      font-family: var(--font-sans);
+      background: var(--gray-1);
+      color: var(--text);
+    }
+    .nav {
+      background: var(--surface);
+      border-bottom: 1px solid var(--gray-3);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    .nav-inner {
+      max-inline-size: var(--size-lg);
+      margin-inline: auto;
+      padding: var(--size-2) var(--size-4);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .logo { font-weight: var(--font-weight-7); color: var(--brand); text-decoration: none; }
+    .nav-links { display: none; gap: var(--size-5); font-size: var(--font-size-1); font-weight: var(--font-weight-5); }
+    .nav-links a { color: var(--text-muted); text-decoration: none; }
+    .nav-links a:hover { color: var(--brand); }
+    @media (min-width: 640px) { .nav-links { display: flex; } }
+
+    .hero {
+      background: var(--surface);
+      border-bottom: 1px solid var(--gray-3);
+      text-align: center;
+      padding: var(--size-10) var(--size-4);
+    }
+    .hero h1 { font-size: var(--font-size-fluid-3); font-weight: var(--font-weight-8); margin-bottom: var(--size-3); }
+    .hero p { color: var(--text-muted); font-size: var(--font-size-2); max-inline-size: var(--size-content-2); margin-inline: auto; margin-bottom: var(--size-6); }
+    .hero-formula {
+      display: inline-block;
+      background: var(--gray-1);
+      padding: var(--size-3) var(--size-6);
+      border-radius: var(--radius-3);
+      font-size: var(--font-size-4);
+    }
+
+    .container { max-inline-size: var(--size-lg); margin-inline: auto; padding: var(--size-8) var(--size-4); }
+    .section-title { font-size: var(--font-size-4); font-weight: var(--font-weight-7); margin-bottom: var(--size-4); }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: var(--size-4);
+      margin-bottom: var(--size-8);
+    }
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--gray-3);
+      border-radius: var(--radius-3);
+      padding: var(--size-4);
+      box-shadow: var(--shadow-1);
+      transition: box-shadow 0.15s;
+    }
+    .card:hover { box-shadow: var(--shadow-3); }
+    .card-icon {
+      inline-size: var(--size-7);
+      block-size: var(--size-7);
+      border-radius: var(--radius-2);
+      display: grid;
+      place-items: center;
+      font-weight: var(--font-weight-7);
+      margin-bottom: var(--size-3);
+    }
+    .card h3 { font-size: var(--font-size-2); font-weight: var(--font-weight-6); margin-bottom: var(--size-1); }
+    .card p { color: var(--text-muted); font-size: var(--font-size-1); margin: 0; }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--size-5);
+      margin-bottom: var(--size-8);
+    }
+    @media (min-width: 900px) { .two-col { grid-template-columns: 1fr 1fr; } }
+    .panel {
+      background: var(--surface);
+      border: 1px solid var(--gray-3);
+      border-radius: var(--radius-3);
+      padding: var(--size-5);
+    }
+    .panel h2 { font-size: var(--font-size-3); font-weight: var(--font-weight-7); margin-bottom: var(--size-3); }
+    .panel p { color: var(--text-muted); margin-bottom: var(--size-3); }
+    .formula-box {
+      background: var(--gray-1);
+      border-radius: var(--radius-3);
+      padding: var(--size-4);
+      text-align: center;
+      font-size: var(--font-size-3);
+    }
+    .input-row { display: flex; gap: var(--size-3); align-items: center; }
+    input[type="number"] {
+      flex: 1;
+      padding: var(--size-2) var(--size-3);
+      border: 1px solid var(--gray-4);
+      border-radius: var(--radius-2);
+      font: inherit;
+    }
+    button {
+      background: var(--brand);
+      color: white;
+      border: none;
+      border-radius: var(--radius-2);
+      padding: var(--size-2) var(--size-4);
+      font-weight: var(--font-weight-6);
+      cursor: pointer;
+      margin-top: var(--size-3);
+      inline-size: 100%;
+    }
+    button:hover { background: var(--indigo-8); }
+
+    table { inline-size: 100%; font-size: var(--font-size-1); border-collapse: collapse; }
+    th, td { padding: var(--size-2) var(--size-3); text-align: left; border-bottom: 1px solid var(--gray-3); }
+    th { background: var(--gray-1); font-weight: var(--font-weight-6); }
+    td:last-child { text-align: right; font-family: var(--font-mono); }
+
+    .segment {
+      display: inline-flex;
+      background: var(--gray-2);
+      border: 1px solid var(--gray-4);
+      border-radius: var(--radius-2);
+      padding: 2px;
+      gap: 2px;
+    }
+    .segment input { position: absolute; opacity: 0; pointer-events: none; }
+    .segment label {
+      padding: var(--size-1) var(--size-3);
+      border-radius: var(--radius-2);
+      cursor: pointer;
+      font-size: var(--font-size-1);
+      color: var(--text-muted);
+      transition: background 0.15s, color 0.15s, box-shadow 0.15s;
+    }
+    .segment input:checked + label {
+      background: var(--surface);
+      color: var(--text);
+      box-shadow: var(--shadow-1);
+    }
+    .segment label:hover { color: var(--text); }
+
+    .slider {
+      -webkit-appearance: none;
+      appearance: none;
+      inline-size: 100%;
+      block-size: 6px;
+      background: var(--gray-3);
+      border-radius: var(--radius-round);
+      outline: none;
+    }
+    .slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      inline-size: 18px;
+      block-size: 18px;
+      background: var(--brand);
+      border-radius: 50%;
+      cursor: pointer;
+      border: 2px solid var(--surface);
+      box-shadow: var(--shadow-1);
+      transition: box-shadow 0.15s;
+    }
+    .slider::-moz-range-thumb {
+      inline-size: 18px;
+      block-size: 18px;
+      background: var(--brand);
+      border-radius: 50%;
+      cursor: pointer;
+      border: 2px solid var(--surface);
+      box-shadow: var(--shadow-1);
+      transition: box-shadow 0.15s;
+    }
+    .slider:focus::-webkit-slider-thumb { box-shadow: 0 0 0 3px var(--brand-light); }
+    .slider:focus::-moz-range-thumb { box-shadow: 0 0 0 3px var(--brand-light); }
+
+    .switch { display: inline-flex; align-items: center; gap: var(--size-2); cursor: pointer; }
+    .switch input { position: absolute; opacity: 0; }
+    .switch-track {
+      inline-size: 40px;
+      block-size: 22px;
+      background: var(--gray-4);
+      border-radius: var(--radius-round);
+      position: relative;
+      transition: background 0.15s;
+    }
+    .switch-thumb {
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      inline-size: 18px;
+      block-size: 18px;
+      background: var(--surface);
+      border-radius: 50%;
+      transition: transform 0.15s;
+      box-shadow: var(--shadow-1);
+    }
+    .switch input:checked + .switch-track { background: var(--brand); }
+    .switch input:checked + .switch-track .switch-thumb { transform: translateX(18px); }
+    .switch-text { font-size: var(--font-size-1); color: var(--text-muted); }
+
+    footer {
+      border-top: 1px solid var(--gray-3);
+      background: var(--surface);
+      padding: var(--size-5) var(--size-4);
+    }
+    .footer-inner {
+      max-inline-size: var(--size-lg);
+      margin-inline: auto;
+      display: flex;
+      justify-content: space-between;
+      font-size: var(--font-size-0);
+      color: var(--text-muted);
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="#" class="logo">Math KB</a>
+      <div class="nav-links">
+        <a href="#">関数</a>
+        <a href="#">幾何</a>
+        <a href="#">確率</a>
+        <a href="#">統計</a>
+        <a href="#">線形代数</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <h1>数学を見て、触れて、理解する</h1>
+    <p>インタラクティブな計算ツールと可視化で、式の意味を直感的に捉えます。</p>
+    <div class="hero-formula">$$ e^{i\pi} + 1 = 0 $$</div>
+  </header>
+
+  <main class="container">
+    <h2 class="section-title">ツール一覧</h2>
+    <div class="grid">
+      <div class="card">
+        <div class="card-icon" style="background: var(--indigo-1); color: var(--indigo-7);">f(x)</div>
+        <h3>関数グラフ</h3>
+        <p>任意の式を入力してリアルタイムにプロット。</p>
+      </div>
+      <div class="card">
+        <div class="card-icon" style="background: var(--green-1); color: var(--green-7);">△</div>
+        <h3>幾何シミュレータ</h3>
+        <p>図形の性質をドラッグで確認。</p>
+      </div>
+      <div class="card">
+        <div class="card-icon" style="background: var(--yellow-1); color: var(--yellow-7);">P</div>
+        <h3>確率実験</h3>
+        <p>モンテカルロ法で確率を体験。</p>
+      </div>
+      <div class="card">
+        <div class="card-icon" style="background: var(--red-1); color: var(--red-7);">Σ</div>
+        <h3>統計可視化</h3>
+        <p>分布、相関、回帰を即座に描画。</p>
+      </div>
+    </div>
+
+    <section class="panel">
+      <h2>セグメントトグル</h2>
+      <p>複数の選択肢から一つを選ぶ UI パーツです。低差異数列の底切り替えや表示モード切り替えに使えます。</p>
+      <div class="segment">
+        <input type="radio" name="view" id="view-graph" checked>
+        <label for="view-graph">グラフ</label>
+        <input type="radio" name="view" id="view-table">
+        <label for="view-table">テーブル</label>
+        <input type="radio" name="view" id="view-code">
+        <label for="view-code">コード</label>
+      </div>
+    </section>
+
+    <div class="two-col">
+      <section class="panel">
+        <h2>スライダー</h2>
+        <p>連続値や離散値を直感的に変更できます。</p>
+        <label style="display: flex; align-items: center; gap: var(--size-3); font-size: var(--font-size-1);">
+          点数
+          <input type="range" min="0" max="100" value="42" class="slider">
+          <span style="font-family: var(--font-mono); min-inline-size: var(--size-6); text-align: right;">42</span>
+        </label>
+      </section>
+      <section class="panel">
+        <h2>スイッチ</h2>
+        <p>ON / OFF の切り替えに使います。</p>
+        <label class="switch">
+          <input type="checkbox" checked>
+          <span class="switch-track"><span class="switch-thumb"></span></span>
+          <span class="switch-text">グリッド表示</span>
+        </label>
+      </section>
+    </div>
+
+    <div class="two-col">
+      <section class="panel">
+        <h2>二次方程式の解</h2>
+        <p>$ ax^2 + bx + c = 0 $ の解は判別式 $ D = b^2 - 4ac $ によって決まります。</p>
+        <div class="formula-box">$$ x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a} $$</div>
+      </section>
+      <section class="panel">
+        <h2>範囲指定</h2>
+        <label>関数 $ f(x) = x^2 $ の描画範囲</label>
+        <div class="input-row">
+          <input type="number" value="-5">
+          <span style="color: var(--text-muted);">〜</span>
+          <input type="number" value="5">
+        </div>
+        <button>適用</button>
+      </section>
+    </div>
+
+    <section class="panel">
+      <h2>数学定数</h2>
+      <div style="overflow-x: auto;">
+        <table>
+          <thead>
+            <tr><th>記号</th><th>名称</th><th style="text-align: right;">値</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>$\pi$</td><td>円周率</td><td>3.14159...</td></tr>
+            <tr><td>$e$</td><td>ネイピア数</td><td>2.71828...</td></tr>
+            <tr><td>$\phi$</td><td>黄金比</td><td>1.61803...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <span>&copy; 2026 Math KB</span>
+      <a href="#" style="color: var(--text-muted);">GitHub</a>
+    </div>
+  </footer>
+</body>
+</html>
