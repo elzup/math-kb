@@ -774,6 +774,12 @@ a {
   justify-content: center;
 }
 
+/* Inline figures outside of tables; `.table td.numeric` handles cells. */
+.numeric {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
 /* WeekdayCalc */
 .weekday-calc {
   --wc-node-border: var(--border);
