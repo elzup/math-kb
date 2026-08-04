@@ -113,6 +113,8 @@ export const TAGS: Tag[] = [
       'parametric-curve',
       'harmonic-motion',
       'waveform',
+      'hilbert-curve',
+      'space-filling-curve',
     ],
   },
   {
@@ -203,7 +205,29 @@ export const TAGS: Tag[] = [
     label: '組み合わせ論',
     category: 'field',
     description: '組み合わせや順列を扱う数学分野。',
-    relatedTagIds: ['probability', 'riffle-shuffle'],
+    relatedTagIds: ['probability', 'riffle-shuffle', 'permutation'],
+  },
+  {
+    id: 'hilbert-curve',
+    label: 'ヒルベルト曲線',
+    category: 'concept',
+    description:
+      '正方形を再帰的に埋め尽くす空間充填曲線。近い点の近さを保つ性質を持つ。',
+    relatedTagIds: ['space-filling-curve', 'geometry', 'permutation'],
+  },
+  {
+    id: 'space-filling-curve',
+    label: '空間充填曲線',
+    category: 'concept',
+    description: '1 次元の区間から高次元領域全体への連続な全射で表される曲線。',
+    relatedTagIds: ['hilbert-curve', 'geometry'],
+  },
+  {
+    id: 'permutation',
+    label: '置換',
+    category: 'concept',
+    description: '要素の並べ替え。巡回に分解でき、繰り返すと元の並びに戻る。',
+    relatedTagIds: ['combinatorics', 'card-shuffling', 'hilbert-curve'],
   },
   {
     id: 'markov-chain',

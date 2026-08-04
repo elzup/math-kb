@@ -146,6 +146,22 @@ export const PAGES: PageMeta[] = [
     ],
     icon: '∞',
   },
+  {
+    id: 'hilbert-shuffle',
+    href: '/hilbert-shuffle',
+    title: 'Hilbert Curve Shuffle',
+    description:
+      'グリッドに並べたカードをヒルベルト曲線の順に拾い直して得られるシャッフルを可視化します。',
+    categoryId: 'probability-combinatorics',
+    tagIds: [
+      'hilbert-curve',
+      'space-filling-curve',
+      'permutation',
+      'geometry',
+      'combinatorics',
+    ],
+    icon: '⊓',
+  },
 ]
 
 export const PAGE_BY_ID = new Map(PAGES.map((page) => [page.id, page]))
