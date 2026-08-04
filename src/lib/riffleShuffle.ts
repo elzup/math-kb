@@ -1,117 +1,73 @@
-export type Card = {
-  originalIndex: number
-  currentIndex: number
-}
-
-export type Deck = Card[]
+import {
+  identityPermutation,
+  isIdentity,
+  type Permutation,
+  permutationOrbit,
+} from './permutation'
 
 export type ShuffleStep = {
   step: number
-  deck: Deck
+  deck: number[]
   risingSequenceCount: number
 }
 
-export function countRisingSequences(deck: Deck): number {
+function perfectShufflePermutation(size: number, startWith: 'left' | 'right') {
+  if (size % 2 !== 0) {
+    throw new Error('Perfect shuffle requires an even deck size')
+  }
+
+  const half = size / 2
+  const [first, second] = startWith === 'left' ? [0, half] : [half, 0]
+
+  return identityPermutation(size).map((slot) =>
+    slot % 2 === 0 ? first + slot / 2 : second + (slot - 1) / 2
+  )
+}
+
+/** Out-shuffle: the top card stays on top. */
+export function perfectOutPermutation(size: number): number[] {
+  return perfectShufflePermutation(size, 'left')
+}
+
+/** In-shuffle: the top card moves one place down. */
+export function perfectInPermutation(size: number): number[] {
+  return perfectShufflePermutation(size, 'right')
+}
+
+/**
+ * Number of runs that are still in the original order when the deck is read
+ * from the top. A perfect shuffle at most doubles it; back at the start it is 1.
+ */
+export function countRisingSequences(deck: Permutation): number {
   if (deck.length === 0) return 0
 
-  const positions = new Array(deck.length)
-  for (let i = 0; i < deck.length; i++) {
-    positions[deck[i].originalIndex] = i
+  const positions = new Array<number>(deck.length)
+  for (let slot = 0; slot < deck.length; slot++) {
+    positions[deck[slot]] = slot
   }
 
   let count = 1
-  for (let i = 1; i < positions.length; i++) {
-    if (positions[i] < positions[i - 1]) {
-      count++
-    }
+  for (let card = 1; card < positions.length; card++) {
+    if (positions[card] < positions[card - 1]) count++
   }
 
   return count
 }
 
-function interleavePerfect(
-  left: Deck,
-  right: Deck,
-  startWith: 'left' | 'right'
-): Deck {
-  const result: Deck = []
-  const half = left.length
-  for (let i = 0; i < half; i++) {
-    if (startWith === 'left') {
-      result.push(left[i])
-      result.push(right[i])
-    } else {
-      result.push(right[i])
-      result.push(left[i])
-    }
-  }
-  return result
-}
+/**
+ * Every deck state from the start until the shuffle brings it back.
+ * `cycleLength` is -1 when `maxSteps` ran out first.
+ */
+export function simulateUntilReturn(perm: Permutation, maxSteps = 10000) {
+  const states = permutationOrbit(perm, maxSteps)
+  const returned = states.length > 1 && isIdentity(states[states.length - 1])
 
-export function perfectOutShuffle(deck: Deck): Deck {
-  const n = deck.length
-  if (n % 2 !== 0) {
-    throw new Error('Perfect shuffle requires an even deck size')
-  }
-  const half = n / 2
-  const left = deck.slice(0, half)
-  const right = deck.slice(half)
-  return interleavePerfect(left, right, 'left')
-}
-
-export function perfectInShuffle(deck: Deck): Deck {
-  const n = deck.length
-  if (n % 2 !== 0) {
-    throw new Error('Perfect shuffle requires an even deck size')
-  }
-  const half = n / 2
-  const left = deck.slice(0, half)
-  const right = deck.slice(half)
-  return interleavePerfect(left, right, 'right')
-}
-
-export function isOriginalOrder(deck: Deck): boolean {
-  return deck.every((card, index) => card.originalIndex === index)
-}
-
-export function simulateUntilReturn(
-  shuffle: (deck: Deck) => Deck,
-  deckSize: number,
-  maxSteps = 10000
-): { cycleLength: number; steps: ShuffleStep[] } {
-  let deck: Deck = Array.from({ length: deckSize }, (_, i) => ({
-    originalIndex: i,
-    currentIndex: i,
-  }))
-
-  const steps: ShuffleStep[] = [
-    {
-      step: 0,
-      deck: deck.map((card, i) => ({ ...card, currentIndex: i })),
-      risingSequenceCount: countRisingSequences(deck),
-    },
-  ]
-
-  for (let step = 1; step <= maxSteps; step++) {
-    deck = shuffle(deck)
-    steps.push({
+  return {
+    cycleLength: returned ? states.length - 1 : -1,
+    steps: states.map<ShuffleStep>((deck, step) => ({
       step,
-      deck: deck.map((card, i) => ({ ...card, currentIndex: i })),
+      deck,
       risingSequenceCount: countRisingSequences(deck),
-    })
-    if (isOriginalOrder(deck)) {
-      return { cycleLength: step, steps }
-    }
+    })),
   }
-
-  return { cycleLength: -1, steps }
-}
-
-export function generateDistinctColors(count: number): string[] {
-  const colors: string[] = []
-  for (let i = 0; i < count; i++) {
-    const hue = Math.round((i / count) * 360)
-    colors.push(`hsl(${hue}, 70%, 55%)`)
-  }
-  return colors
 }

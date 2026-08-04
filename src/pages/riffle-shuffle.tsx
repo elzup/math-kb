@@ -1,10 +1,11 @@
 import { useMemo, useState } from 'react'
 import Layout from '@/components/Layout'
 import PageTags from '@/components/PageTags'
-import RiffleVisualizer from '@/components/RiffleVisualizer'
+import ShuffleStackPlot from '@/components/ShuffleStackPlot'
+import type { DeckColorMode } from '@/lib/deckColor'
 import {
-  perfectInShuffle,
-  perfectOutShuffle,
+  perfectInPermutation,
+  perfectOutPermutation,
   simulateUntilReturn,
 } from '@/lib/riffleShuffle'
 
@@ -12,12 +13,19 @@ const DECK_SIZE = 52
 
 export default function RiffleShufflePage() {
   const [cycleMode, setCycleMode] = useState<'out' | 'in'>('out')
-  const [colorMode, setColorMode] = useState<'grayscale' | 'color'>('grayscale')
+  const [colorMode, setColorMode] = useState<DeckColorMode>('grayscale')
 
   const cycleResult = useMemo(() => {
-    const shuffle = cycleMode === 'out' ? perfectOutShuffle : perfectInShuffle
-    return simulateUntilReturn(shuffle, DECK_SIZE)
+    const perm =
+      cycleMode === 'out'
+        ? perfectOutPermutation(DECK_SIZE)
+        : perfectInPermutation(DECK_SIZE)
+    return simulateUntilReturn(perm)
   }, [cycleMode])
+  const decks = useMemo(
+    () => cycleResult.steps.map((step) => step.deck),
+    [cycleResult]
+  )
 
   return (
     <Layout title="Riffle Shuffle の周期 - Math KB">
@@ -87,7 +95,11 @@ export default function RiffleShufflePage() {
               <label htmlFor="color-color">色相</label>
             </div>
           </div>
-          <RiffleVisualizer steps={cycleResult.steps} colorMode={colorMode} />
+          <ShuffleStackPlot
+            steps={decks}
+            colorMode={colorMode}
+            rowHeight={28}
+          />
         </section>
 
         <section className="section">
