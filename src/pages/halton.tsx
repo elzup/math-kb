@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import { Fragment, useMemo, useState } from 'react'
 import Layout from '@/components/Layout'
 import PageTags from '@/components/PageTags'
@@ -184,6 +185,13 @@ export default function HaltonPage() {
               </tbody>
             </table>
           </div>
+          <p className="section-text">
+            この一様性が数値積分の収束速度にどう効くかは{' '}
+            <Link href="/monte-carlo" className="link">
+              Monte Carlo 収束速度比較
+            </Link>{' '}
+            で扱っています。
+          </p>
         </section>
 
         <section className="warning">

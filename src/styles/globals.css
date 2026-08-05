@@ -774,6 +774,12 @@ a {
   justify-content: center;
 }
 
+/* Cross-page links; the global `a` rule strips colour and underline. */
+.link {
+  color: var(--brand);
+  text-decoration: underline;
+}
+
 /* Inline figures outside of tables; `.table td.numeric` handles cells. */
 .numeric {
   font-family: var(--font-mono);

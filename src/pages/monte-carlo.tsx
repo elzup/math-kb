@@ -1,8 +1,8 @@
+import Link from 'next/link'
 import { Fragment, useMemo, useState } from 'react'
 import Layout from '@/components/Layout'
 import PageTags from '@/components/PageTags'
 import Tex from '@/components/Tex'
-import PointPlot from '@/components/PointPlot'
 import ConvergenceChart from '@/components/ConvergenceChart'
 import {
   haltonSequence,
@@ -27,6 +27,8 @@ export default function MonteCarloPage() {
     [trials]
   )
 
+  const randomEstimate = estimateQuarterCircleArea(randomPoints) * 4
+  const haltonEstimate = estimateQuarterCircleArea(haltonPoints) * 4
   const randomError = piEstimateError(estimateQuarterCircleArea(randomPoints))
   const haltonError = piEstimateError(estimateQuarterCircleArea(haltonPoints))
 
@@ -55,51 +57,53 @@ export default function MonteCarloPage() {
           </div>
         </section>
 
-        <div className="grid-2">
-          <section className="section">
-            <div className="slider-row">
-              <h2 className="section-title" style={{ margin: 0 }}>
-                ランダム（1 試行）
-              </h2>
-              <button
-                onClick={() => setSeed((s) => s + 1)}
-                className="button button-secondary"
-              >
-                別シード
-              </button>
-            </div>
-            <div className="flex-center">
-              <PointPlot
-                points={randomPoints}
-                width={280}
-                height={280}
-                pointSize={2}
-                color="#9e9e9e"
-              />
-            </div>
-            <p className="section-text center">
-              推定誤差:{' '}
-              <span className="numeric">{randomError.toFixed(5)}</span>
-            </p>
-          </section>
-
-          <section className="section">
-            <h2 className="section-title">Halton Sequence</h2>
-            <div className="flex-center">
-              <PointPlot
-                points={haltonPoints}
-                width={280}
-                height={280}
-                pointSize={2}
-                color="#795548"
-              />
-            </div>
-            <p className="section-text center">
-              推定誤差:{' '}
-              <span className="numeric">{haltonError.toFixed(5)}</span>
-            </p>
-          </section>
-        </div>
+        <section className="section">
+          <div className="slider-row">
+            <h2 className="section-title" style={{ margin: 0 }}>
+              同じ点数での推定誤差
+            </h2>
+            <button
+              type="button"
+              onClick={() => setSeed((s) => s + 1)}
+              className="button button-secondary"
+            >
+              別シード
+            </button>
+          </div>
+          <p className="section-text">
+            どちらも {SAMPLE_COUNT} 点を使った 1
+            回の推定です。ランダムはシードごとに揺れますが、Halton
+            数列は決定論的なので何度実行しても同じ値になります。
+          </p>
+          <table className="table">
+            <thead>
+              <tr>
+                <th>点列</th>
+                <th className="numeric">推定値</th>
+                <th className="numeric">誤差</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>ランダム</td>
+                <td className="numeric">{randomEstimate.toFixed(5)}</td>
+                <td className="numeric">{randomError.toFixed(5)}</td>
+              </tr>
+              <tr>
+                <td>Halton</td>
+                <td className="numeric">{haltonEstimate.toFixed(5)}</td>
+                <td className="numeric">{haltonError.toFixed(5)}</td>
+              </tr>
+            </tbody>
+          </table>
+          <p className="section-text">
+            点そのものの分布と、格子で測った一様性の指標は{' '}
+            <Link href="/halton" className="link">
+              Halton Sequence
+            </Link>{' '}
+            を参照してください。
+          </p>
+        </section>
 
         <section className="section">
           <div className="slider-row">
