@@ -550,6 +550,28 @@ a {
   text-align: right;
 }
 
+/*
+ * The nudge buttons must not drift as the readout grows, so the control group
+ * keeps a fixed width and the readout absorbs whatever space is left.
+ */
+.count-slider {
+  display: flex;
+  align-items: center;
+  gap: var(--size-2);
+  flex: 0 0 auto;
+  inline-size: min(320px, 100%);
+}
+
+.count-slider-readout {
+  flex: 1 1 0;
+  min-inline-size: 0;
+  text-align: right;
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-size: var(--font-size-1);
+  color: var(--text-muted);
+}
+
 .table {
   width: 100%;
   font-size: var(--font-size-1);
@@ -613,6 +635,19 @@ a {
 
 .button-secondary:hover {
   background: var(--border);
+}
+
+/* Square nudge button sitting either side of a slider. */
+.button-compact {
+  padding: var(--size-1) var(--size-2);
+  min-inline-size: var(--size-6);
+  font-family: var(--font-mono);
+  line-height: 1;
+}
+
+.button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
 }
 
 .segment {

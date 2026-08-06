@@ -1,4 +1,6 @@
-export type Point = { x: number; y: number }
+import type { Point } from './point'
+
+export type { Point }
 
 /**
  * Rotate / reflect a quadrant so that its sub-curve lines up with its

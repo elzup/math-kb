@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react'
+import CountSlider from '@/components/CountSlider'
 import DisplacementChart from '@/components/DisplacementChart'
 import HilbertCurvePlot from '@/components/HilbertCurvePlot'
 import Layout from '@/components/Layout'
@@ -104,23 +105,16 @@ export default function HilbertShufflePage() {
             </label>
           </div>
 
-          <div className="slider-row">
-            <label className="slider-label">
-              ステップ
-              <input
-                type="range"
-                min={1}
-                max={deckSize}
-                value={walked}
-                onChange={(e) => setProgress(Number(e.target.value))}
-                className="slider"
-              />
-            </label>
-            <span className="slider-value numeric">
-              {walked} / {deckSize}
-              {head ? `　(x, y) = (${head.x}, ${head.y})` : ''}
-            </span>
-          </div>
+          <CountSlider
+            label="ステップ"
+            value={walked}
+            min={1}
+            max={deckSize}
+            onChange={setProgress}
+            readout={`${walked} / ${deckSize}${
+              head ? `　(x, y) = (${head.x}, ${head.y})` : ''
+            }`}
+          />
 
           <div className="flex-center">
             <HilbertCurvePlot points={points} order={order} progress={walked} />
@@ -190,18 +184,14 @@ export default function HilbertShufflePage() {
               {repeats} 回{isRestored ? '　→ 元の並びに戻りました' : ''}
             </span>
           </div>
+          <CountSlider
+            label="回数"
+            value={Math.min(repeats, repeatMax)}
+            min={0}
+            max={repeatMax}
+            onChange={setRepeats}
+          />
           <div className="slider-row">
-            <label className="slider-label">
-              回数
-              <input
-                type="range"
-                min={0}
-                max={repeatMax}
-                value={Math.min(repeats, repeatMax)}
-                onChange={(e) => setRepeats(Number(e.target.value))}
-                className="slider"
-              />
-            </label>
             <button
               type="button"
               onClick={() => setRepeats(1)}
