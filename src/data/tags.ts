@@ -115,6 +115,8 @@ export const TAGS: Tag[] = [
       'waveform',
       'hilbert-curve',
       'space-filling-curve',
+      'dragon-curve',
+      'fractal',
     ],
   },
   {
@@ -129,7 +131,7 @@ export const TAGS: Tag[] = [
     label: '二進法',
     category: 'concept',
     description: '2 を底とする記数法およびその性質。',
-    relatedTagIds: ['number-theory', 'gray-code'],
+    relatedTagIds: ['number-theory', 'gray-code', 'dragon-curve'],
   },
   {
     id: 'collatz-conjecture',
@@ -220,7 +222,22 @@ export const TAGS: Tag[] = [
     label: '空間充填曲線',
     category: 'concept',
     description: '1 次元の区間から高次元領域全体への連続な全射で表される曲線。',
-    relatedTagIds: ['hilbert-curve', 'geometry'],
+    relatedTagIds: ['hilbert-curve', 'dragon-curve', 'geometry'],
+  },
+  {
+    id: 'dragon-curve',
+    label: 'ドラゴン曲線',
+    category: 'concept',
+    description:
+      '紙を繰り返し半分に折り、折り目を直角に開いて得られる自己相似な曲線。',
+    relatedTagIds: ['fractal', 'space-filling-curve', 'binary', 'geometry'],
+  },
+  {
+    id: 'fractal',
+    label: 'フラクタル',
+    category: 'concept',
+    description: '拡大しても同じ構造が現れる自己相似な図形。',
+    relatedTagIds: ['dragon-curve', 'space-filling-curve', 'geometry'],
   },
   {
     id: 'permutation',

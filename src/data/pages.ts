@@ -162,6 +162,22 @@ export const PAGES: PageMeta[] = [
     ],
     icon: '⊓',
   },
+  {
+    id: 'dragon-curve',
+    href: '/dragon-curve',
+    title: 'Heighway Dragon',
+    description:
+      '紙を繰り返し折って開くと現れるドラゴン曲線を、折り目の規則と辺の書き換えの両面から可視化します。',
+    categoryId: 'geometry',
+    tagIds: [
+      'dragon-curve',
+      'fractal',
+      'space-filling-curve',
+      'binary',
+      'geometry',
+    ],
+    icon: '🐉',
+  },
 ]
 
 export const PAGE_BY_ID = new Map(PAGES.map((page) => [page.id, page]))
