@@ -178,6 +178,16 @@ export const PAGES: PageMeta[] = [
     ],
     icon: '🐉',
   },
+  {
+    id: 'rewrite-lab',
+    href: '/rewrite-lab',
+    title: '辺の書き換えラボ',
+    description:
+      '線分を置き換える折れ線を自分で描き、繰り返し適用してどんなフラクタルになるかを試せるツールです。',
+    categoryId: 'geometry',
+    tagIds: ['fractal', 'dragon-curve', 'space-filling-curve', 'geometry'],
+    icon: '✎',
+  },
 ]
 
 export const PAGE_BY_ID = new Map(PAGES.map((page) => [page.id, page]))
