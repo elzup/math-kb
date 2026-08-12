@@ -188,6 +188,24 @@ export const PAGES: PageMeta[] = [
     tagIds: ['fractal', 'dragon-curve', 'space-filling-curve', 'geometry'],
     icon: '✎',
   },
+  {
+    id: 'galton-board',
+    href: '/galton-board',
+    title: 'ゴルトンボードと正規分布',
+    description:
+      '玉を 1 個ずつ落とす場合と、玉同士がぶつかるほど詰め込んだ場合の落ち先分布を、厳密な二項分布と χ² 検定で比較します。',
+    categoryId: 'probability-combinatorics',
+    tagIds: [
+      'galton-board',
+      'binomial-distribution',
+      'normal-distribution',
+      'central-limit-theorem',
+      'hypothesis-testing',
+      'exclusion-process',
+      'probability',
+    ],
+    icon: '▲',
+  },
 ]
 
 export const PAGE_BY_ID = new Map(PAGES.map((page) => [page.id, page]))

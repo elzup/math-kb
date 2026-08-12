@@ -253,6 +253,60 @@ export const TAGS: Tag[] = [
     description: '次の状態が現在の状態だけに依存する確率過程。',
     relatedTagIds: ['monte-carlo-method', 'probability'],
   },
+  {
+    id: 'normal-distribution',
+    label: '正規分布',
+    category: 'concept',
+    description: '独立な小さいゆらぎの和が近づく釣鐘型の分布。',
+    relatedTagIds: [
+      'binomial-distribution',
+      'central-limit-theorem',
+      'probability',
+    ],
+  },
+  {
+    id: 'binomial-distribution',
+    label: '二項分布',
+    category: 'concept',
+    description:
+      '成功確率が一定の独立な試行を n 回繰り返したときの成功回数の分布。',
+    relatedTagIds: [
+      'normal-distribution',
+      'galton-board',
+      'combinatorics',
+      'probability',
+    ],
+  },
+  {
+    id: 'central-limit-theorem',
+    label: '中心極限定理',
+    category: 'concept',
+    description: '独立同分布な確率変数の和が正規分布に近づくという定理。',
+    relatedTagIds: ['normal-distribution', 'binomial-distribution'],
+  },
+  {
+    id: 'galton-board',
+    label: 'ゴルトンボード',
+    category: 'concept',
+    description: '釘の列に玉を落として二項分布を物理的に作る装置。',
+    relatedTagIds: ['binomial-distribution', 'normal-distribution'],
+  },
+  {
+    id: 'hypothesis-testing',
+    label: '仮説検定',
+    category: 'method',
+    description:
+      '観測が仮定した分布から出たと考えて矛盾しないかを、統計量の裾確率で判断する手続き。',
+    relatedTagIds: ['probability', 'normal-distribution'],
+  },
+  {
+    id: 'exclusion-process',
+    label: '排除過程',
+    category: 'concept',
+    description:
+      '1 つの場所に 1 個までしか入れない粒子が動く確率過程。粒子同士に相関が生まれる。',
+    relatedTagIds: ['probability', 'markov-chain', 'galton-board'],
+  },
 ]
 
 export const TAG_BY_ID = new Map(TAGS.map((tag) => [tag.id, tag]))
