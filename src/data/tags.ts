@@ -21,7 +21,11 @@ export const TAGS: Tag[] = [
     label: '低差異数列',
     category: 'sequence',
     description: '有限個の点をできるだけ均一に分布させる数列。',
-    relatedTagIds: ['quasi-monte-carlo', 'numerical-integration'],
+    relatedTagIds: [
+      'quasi-monte-carlo',
+      'numerical-integration',
+      'irrational-rotation',
+    ],
   },
   {
     id: 'van-der-corput-sequence',
@@ -101,6 +105,8 @@ export const TAGS: Tag[] = [
       'calendar',
       'modular-arithmetic',
       'algorithm',
+      'golden-ratio',
+      'irrational-rotation',
     ],
   },
   {
@@ -117,6 +123,8 @@ export const TAGS: Tag[] = [
       'space-filling-curve',
       'dragon-curve',
       'fractal',
+      'quasiperiodicity',
+      'cut-and-project',
     ],
   },
   {
@@ -306,6 +314,75 @@ export const TAGS: Tag[] = [
     description:
       '1 つの場所に 1 個までしか入れない粒子が動く確率過程。粒子同士に相関が生まれる。',
     relatedTagIds: ['probability', 'markov-chain', 'galton-board'],
+  },
+  {
+    id: 'cut-and-project',
+    label: 'カット＆プロジェクト法',
+    category: 'method',
+    description:
+      '高い次元の格子を帯で切り取り、低い次元へ射影して準周期構造を作る手法。',
+    relatedTagIds: [
+      'quasiperiodicity',
+      'sturmian-word',
+      'fibonacci-word',
+      'irrational-rotation',
+      'geometry',
+    ],
+  },
+  {
+    id: 'quasiperiodicity',
+    label: '準周期',
+    category: 'concept',
+    description:
+      '周期を持たないのに、どの部分を見ても同じ有限の並びだけが現れる秩序。',
+    relatedTagIds: [
+      'cut-and-project',
+      'sturmian-word',
+      'irrational-rotation',
+      'golden-ratio',
+      'geometry',
+    ],
+  },
+  {
+    id: 'sturmian-word',
+    label: 'スツルム語',
+    category: 'sequence',
+    description:
+      '無理数の傾きの直線を格子で読み取って得られる、2 文字からなる非周期列。',
+    relatedTagIds: [
+      'fibonacci-word',
+      'cut-and-project',
+      'quasiperiodicity',
+      'irrational-rotation',
+    ],
+  },
+  {
+    id: 'fibonacci-word',
+    label: 'フィボナッチ語',
+    category: 'sequence',
+    description: 'L → LS, S → L の置き換えで伸びる語。黄金比のスツルム語。',
+    relatedTagIds: ['sturmian-word', 'golden-ratio', 'cut-and-project'],
+  },
+  {
+    id: 'golden-ratio',
+    label: '黄金比',
+    category: 'concept',
+    description:
+      '1 : (1 + √5) / 2 の比。有理数で最も近似しにくい無理数でもある。',
+    relatedTagIds: ['fibonacci-word', 'quasiperiodicity', 'number-theory'],
+  },
+  {
+    id: 'irrational-rotation',
+    label: '無理数回転',
+    category: 'concept',
+    description:
+      '円周を無理数の割合で回し続ける写像。同じ点に戻らず、軌道は一様に散らばる。',
+    relatedTagIds: [
+      'quasiperiodicity',
+      'sturmian-word',
+      'low-discrepancy-sequence',
+      'number-theory',
+    ],
   },
 ]
 

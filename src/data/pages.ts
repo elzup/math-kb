@@ -206,6 +206,24 @@ export const PAGES: PageMeta[] = [
     ],
     icon: '▲',
   },
+  {
+    id: 'cut-and-project',
+    href: '/cut-and-project',
+    title: 'Cut and Project',
+    description:
+      '格子に無理数の傾きで帯をかけ、帯の中の格子点を直線へ落として準周期的な点列を作ります。',
+    categoryId: 'geometry',
+    tagIds: [
+      'cut-and-project',
+      'quasiperiodicity',
+      'sturmian-word',
+      'fibonacci-word',
+      'golden-ratio',
+      'irrational-rotation',
+      'geometry',
+    ],
+    icon: '◇',
+  },
 ]
 
 export const PAGE_BY_ID = new Map(PAGES.map((page) => [page.id, page]))
