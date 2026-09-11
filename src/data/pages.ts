@@ -13,7 +13,6 @@ export type PageMeta = {
   description: string
   categoryId: string
   tagIds: string[]
-  icon: string
 }
 
 export const PAGE_CATEGORIES: PageCategory[] = [
@@ -52,7 +51,6 @@ export const PAGES: PageMeta[] = [
       'van-der-corput-sequence',
       'number-theory',
     ],
-    icon: '⊥',
   },
   {
     id: 'halton',
@@ -68,7 +66,6 @@ export const PAGES: PageMeta[] = [
       'number-theory',
       'quasi-monte-carlo',
     ],
-    icon: '⊞',
   },
   {
     id: 'monte-carlo',
@@ -84,7 +81,6 @@ export const PAGES: PageMeta[] = [
       'probability',
       'pi',
     ],
-    icon: 'π',
   },
   {
     id: 'riffle-shuffle',
@@ -100,7 +96,6 @@ export const PAGES: PageMeta[] = [
       'probability',
       'markov-chain',
     ],
-    icon: '♠',
   },
   {
     id: 'collatz-graph',
@@ -109,7 +104,6 @@ export const PAGES: PageMeta[] = [
     description: 'コラッツ予想の逆方向探索木をレベルごとに可視化します。',
     categoryId: 'number-theory',
     tagIds: ['number-theory', 'collatz-conjecture'],
-    icon: '↺',
   },
   {
     id: 'gray-code',
@@ -118,7 +112,6 @@ export const PAGES: PageMeta[] = [
     description: '隣り合う値が 1 ビットだけ異なる二進符号を可視化します。',
     categoryId: 'number-theory',
     tagIds: ['number-theory', 'gray-code', 'binary'],
-    icon: '⊕',
   },
   {
     id: 'weekday-calc',
@@ -128,7 +121,6 @@ export const PAGES: PageMeta[] = [
       '世紀コード・年コード・月コードを使って、任意の日付の曜日を計算し、ステップを可視化します。',
     categoryId: 'number-theory',
     tagIds: ['number-theory', 'calendar', 'modular-arithmetic', 'algorithm'],
-    icon: '📅',
   },
   {
     id: 'lissajous',
@@ -144,7 +136,6 @@ export const PAGES: PageMeta[] = [
       'waveform',
       'geometry',
     ],
-    icon: '∞',
   },
   {
     id: 'hilbert-shuffle',
@@ -160,7 +151,6 @@ export const PAGES: PageMeta[] = [
       'geometry',
       'combinatorics',
     ],
-    icon: '⊓',
   },
   {
     id: 'dragon-curve',
@@ -176,7 +166,6 @@ export const PAGES: PageMeta[] = [
       'binary',
       'geometry',
     ],
-    icon: '🐉',
   },
   {
     id: 'chaos-game',
@@ -186,7 +175,6 @@ export const PAGES: PageMeta[] = [
       'ランダムに選んだ頂点との中点を打ち続け、シェルピンスキーの三角形が現れる過程を観察します。',
     categoryId: 'geometry',
     tagIds: ['chaos-game', 'sierpinski-triangle', 'fractal', 'probability'],
-    icon: '△',
   },
   {
     id: 'rewrite-lab',
@@ -196,7 +184,6 @@ export const PAGES: PageMeta[] = [
       '線分を置き換える折れ線を自分で描き、繰り返し適用してどんなフラクタルになるかを試せるツールです。',
     categoryId: 'geometry',
     tagIds: ['fractal', 'dragon-curve', 'space-filling-curve', 'geometry'],
-    icon: '✎',
   },
   {
     id: 'galton-board',
@@ -214,7 +201,6 @@ export const PAGES: PageMeta[] = [
       'exclusion-process',
       'probability',
     ],
-    icon: '▲',
   },
   {
     id: 'cut-and-project',
@@ -232,7 +218,6 @@ export const PAGES: PageMeta[] = [
       'irrational-rotation',
       'geometry',
     ],
-    icon: '◇',
   },
 ]
 

@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { PAGE_CATEGORIES, PAGES_BY_CATEGORY } from '@/data/pages'
+import PageIcon from './PageIcon'
 
 export default function PageMenu() {
   return (
@@ -14,7 +15,7 @@ export default function PageMenu() {
             {pages.map((page) => (
               <Link key={page.id} href={page.href} className="page-menu-item">
                 <span className="page-menu-icon" aria-hidden="true">
-                  {page.icon}
+                  <PageIcon pageId={page.id} />
                 </span>
                 <span className="page-menu-title">{page.title}</span>
               </Link>

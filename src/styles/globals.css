@@ -101,18 +101,52 @@ a {
 .logo {
   display: flex;
   align-items: center;
+  gap: var(--size-2);
   color: var(--header-text);
+  transition: opacity 0.15s;
 }
 
-.logo img {
-  display: block;
-  height: 32px;
-  width: auto;
+.logo:hover {
+  opacity: 0.85;
+}
+
+.logo-mark {
+  inline-size: 24px;
+  block-size: 24px;
+  flex: 0 0 24px;
+  background: var(--brand-light);
+  -webkit-mask: url("/logo-icon.svg") center / contain no-repeat;
+  mask: url("/logo-icon.svg") center / contain no-repeat;
+}
+
+.logo-name {
+  font-size: var(--font-size-2);
+  font-weight: var(--font-weight-7);
+  letter-spacing: -0.5px;
 }
 
 .logo-muted {
   font-weight: var(--font-weight-3);
   color: var(--header-text-muted);
+}
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--size-3);
+}
+
+.nav-sibling-link {
+  display: flex;
+  align-items: center;
+  gap: var(--size-2);
+  color: var(--header-text-muted);
+  font-size: var(--font-size-1);
+  font-weight: var(--font-weight-5);
+}
+
+.nav-sibling-link:hover {
+  color: var(--header-text);
 }
 
 .nav-links {
@@ -232,11 +266,19 @@ a {
 }
 
 .hero-tools-title {
+  display: flex;
+  justify-content: center;
+  gap: var(--size-2);
   font-size: var(--font-size-fluid-3);
   font-weight: var(--font-weight-7);
   color: var(--text);
   margin: 0 0 var(--size-2);
   letter-spacing: -0.5px;
+}
+
+.hero-tools-product {
+  color: var(--text-muted);
+  font-weight: var(--font-weight-3);
 }
 
 .hero-tools-lead {
@@ -296,7 +338,12 @@ a {
   text-align: center;
   color: var(--text-muted);
   opacity: 0.7;
-  font-family: var(--font-mono);
+}
+
+.page-menu-icon svg {
+  display: block;
+  width: 1rem;
+  height: 1rem;
 }
 
 .page-menu-title {

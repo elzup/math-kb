@@ -1,6 +1,7 @@
 import Head from 'next/head'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
+import { FaTools } from 'react-icons/fa'
 
 function ThemeToggle() {
   const [theme, setTheme] = useState<'light' | 'dark'>('light')
@@ -55,19 +56,27 @@ export default function Layout({ children, title = 'Math KB' }: Props) {
       <Head>
         <title>{title}</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="icon" href="/logo-icon.svg" type="image/svg+xml" />
       </Head>
       <div className="layout">
         <nav className="nav">
           <div className="container nav-inner">
-            <Link href="/" className="logo" aria-label="Math KB">
-              <img
-                src="/logo.svg"
-                alt="anozon/mathkb"
-                height="32"
-                width="180"
-              />
+            <Link href="/" className="logo" aria-label="anozon/mathkb">
+              <span className="logo-mark" aria-hidden="true" />
+              <span className="logo-name">anozon</span>
+              <span className="logo-muted">/mathkb</span>
             </Link>
-            <ThemeToggle />
+            <div className="nav-actions">
+              <a
+                href="https://tools.anozon.me/"
+                className="nav-sibling-link"
+                title="anozon/tools"
+              >
+                <FaTools aria-hidden="true" />
+                <span>Tools</span>
+              </a>
+              <ThemeToggle />
+            </div>
           </div>
         </nav>
         <main className="container page">{children}</main>

@@ -8,7 +8,10 @@ export default function Home() {
         <div className="hero-tools-icon">
           <img src="/logo-icon.svg" alt="" width="64" height="64" />
         </div>
-        <h1 className="hero-tools-title">anozon/mathkb</h1>
+        <h1 className="hero-tools-title">
+          <span>anozon</span>
+          <span className="hero-tools-product">/mathkb</span>
+        </h1>
         <p className="hero-tools-lead">Collection of Math books</p>
       </div>
       <PageMenu />

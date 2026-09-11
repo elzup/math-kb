@@ -1,0 +1,6 @@
+pre-commit:
+  commands:
+    check:
+      run: nr check
+    type-check:
+      run: nr type-check
