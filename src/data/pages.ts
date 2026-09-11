@@ -179,6 +179,16 @@ export const PAGES: PageMeta[] = [
     icon: '🐉',
   },
   {
+    id: 'chaos-game',
+    href: '/chaos-game',
+    title: 'カオスゲーム',
+    description:
+      'ランダムに選んだ頂点との中点を打ち続け、シェルピンスキーの三角形が現れる過程を観察します。',
+    categoryId: 'geometry',
+    tagIds: ['chaos-game', 'sierpinski-triangle', 'fractal', 'probability'],
+    icon: '△',
+  },
+  {
     id: 'rewrite-lab',
     href: '/rewrite-lab',
     title: '辺の書き換えラボ',

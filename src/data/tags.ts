@@ -248,6 +248,21 @@ export const TAGS: Tag[] = [
     relatedTagIds: ['dragon-curve', 'space-filling-curve', 'geometry'],
   },
   {
+    id: 'chaos-game',
+    label: 'カオスゲーム',
+    category: 'method',
+    description: '現在の点をランダムに選んだ頂点へ一定比率だけ近づける反復法。',
+    relatedTagIds: ['sierpinski-triangle', 'fractal', 'probability'],
+  },
+  {
+    id: 'sierpinski-triangle',
+    label: 'シェルピンスキーの三角形',
+    category: 'concept',
+    description:
+      '正三角形から中央の三角形を再帰的に取り除いてできる自己相似図形。',
+    relatedTagIds: ['chaos-game', 'fractal', 'geometry'],
+  },
+  {
     id: 'permutation',
     label: '置換',
     category: 'concept',

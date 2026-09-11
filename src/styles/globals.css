@@ -821,6 +821,93 @@ a {
   font-variant-numeric: tabular-nums;
 }
 
+/* Chaos Game */
+.chaos-game-lab {
+  padding: var(--size-4);
+}
+
+.chaos-toolbar {
+  display: grid;
+  gap: var(--size-4);
+  margin-bottom: var(--size-4);
+}
+
+.chaos-control {
+  display: grid;
+  gap: var(--size-2);
+}
+
+.chaos-control label {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--size-3);
+  color: var(--text-muted);
+  font-size: var(--font-size-1);
+}
+
+.chaos-actions {
+  display: flex;
+  gap: var(--size-2);
+  align-items: flex-end;
+}
+
+.chaos-actions .button {
+  flex: 1;
+}
+
+.chaos-canvas {
+  position: relative;
+  inline-size: min(100%, 720px);
+  aspect-ratio: 1;
+  margin-inline: auto;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+
+.chaos-canvas canvas {
+  position: absolute;
+  inset: 0;
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
+}
+
+.chaos-status {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: var(--size-2) var(--size-3);
+  margin-top: var(--size-3);
+  color: var(--text-muted);
+  font-size: var(--font-size-0);
+}
+
+.chaos-status-dot {
+  inline-size: 8px;
+  block-size: 8px;
+  border-radius: 50%;
+  background: var(--text-light);
+}
+
+.chaos-status-dot.active {
+  background: var(--brand);
+  box-shadow: 0 0 0 4px var(--brand-light);
+}
+
+@media (min-width: 720px) {
+  .chaos-toolbar {
+    grid-template-columns: 1fr 1fr auto;
+    align-items: flex-end;
+  }
+
+  .chaos-actions .button {
+    flex: none;
+  }
+}
+
 /* WeekdayCalc */
 .weekday-calc {
   --wc-node-border: var(--border);
